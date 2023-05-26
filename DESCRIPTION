@@ -1,0 +1,44 @@
+Package: montetools
+Type: Package
+Title: A suite of tools for running and presenting Monte Carlo simulations
+Version: 0.0.0.9000
+Date: 2021-09-04
+Authors@R: c(
+    person("Scott", "Kostyshak",
+           role = c("aut", "cre"),
+           email = "scott.kostyshak@gmail.com",
+           comment = c(ORCID = "0000-0003-4757-117X"))
+    )
+Description: This suite facilitates running Monte Carlo simulations to get numerically reproducible results, to present them in publication-ready formats, and has the following features: simulations can be run in parallel on all platforms; you can set up a backup file so that if your simulations are interrupted you can resume; and you can output results to LaTeX tables.
+URL: https://github.com/scottkosty/montetools
+BugReports: https://github.com/scottkosty/montetools/issues
+License: MIT + file LICENSE
+RoxygenNote: 7.2.3
+Depends:
+    R (>= 4.1.0),
+    future (>= 1.22.0),
+    progressr (>= 0.9.0)
+Imports:
+    plyr,
+    future.apply (>= 1.7.0),
+    RhpcBLASctl,
+    digest (>= 0.6.19),
+    parallelly,
+    xtable,
+    lubridate,
+    globals,
+    codetools,
+    stats,
+    methods,
+    utils,
+    rlang,
+    git2r,
+    tinytex,
+    tools,
+    glue
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/testthat/start-first: statistics, mc-reproduce, order-invariance, globals, mc-extend, mc-run, mc-diags, mc-combine, backup-mechanism
+Encoding: UTF-8
