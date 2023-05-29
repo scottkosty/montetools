@@ -381,6 +381,8 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
   if (display_nsims == "row") {
     if (length(unique(nsims_vec)) == 1) {
       nsims_ <- nsims_vec[[1]]
+      # keywords: thousands separator, comma
+      nsims_ <- format(nsims_, big.mark = big_mark_)
     } else {
       stop("Need to add feature to append nsims row when nsims is not constant.")
     }
