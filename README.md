@@ -4,21 +4,22 @@ R package to run Monte Carlo (MC) simulations, display results, reproduce them, 
 
 # Details
 
-This package is especially beneficial for Monte Carlo simulations that take considerable amounts of time (e.g., hours, days).
+This package is especially beneficial for MCs that take considerable amounts of time (e.g., hours, days).
 
 Current state of development: alpha.
 - montetools is currently in alpha because (1) the interface should not be considered stable (e.g., the argument names could change) and (2) there are bugs lurking and I need testing from workflows other than my own to lure them out so I can fix them. After feedback and testing from others, montetools will move towards a more stable state.
 
 # Features
 
-Once you describe your MC to montetools, it is internally represented as a standard language/format, it is easy to teach montetools new tricks. Please make feature requests! Here is a list of current features:
+Please make feature requests! Here is a list of current features:
 
 1. Run simulations in parallel.
-    * Thanks to standing on the shoulders of the [futureverse](https://www.futureverse.org/), your code will run on Windows, macOS, and Linux; on your computer or in the cloud; on a laptop or on a high-performance compute (HPC) cluster.
+    * Thanks to standing on the shoulders of the [futureverse](https://www.futureverse.org/), your code will run on Windows, macOS, and Linux; on your computer or in the cloud; on a laptop or on a high-performance compute cluster.
 1. Maintain reproducibility.
     * Your results will be numerically reproducible, whether you run your code in parallel or sequentially, and whether you extend or merge results (see below).
-1. Quickly check whether results can be numerically reproduced on a different system or with a code change.
-    * After you upgrade a dependency (e.g., other R package), it is helpful to know that your results are exactly unchanged. montetools can figure this out with moderately high confidence by just checking that the first, e.g., 10 simulations are equivalent.
+1. Quickly check whether results can likely be numerically reproduced.
+    * Some code changes are meant for organization, or simplification, and it is helpful to confirm that such changes do not affect the results.
+    * After you upgrade a dependency (e.g., other R package), it is helpful to know that your results are exactly unchanged. montetools can figure this out with moderate confidence by just checking that the first, e.g., 10 simulations are equivalent.
     * montetools logs the versions of packages, so if your results differ you can check the differences of package versions to get an idea of what might have caused a difference in results.
 1. Handle errors without stopping remaining simulations.
     * Errors can occur in some statistics, e.g., due to rank deficiency. montetools can be configured to log the error and continue.
@@ -28,10 +29,10 @@ Once you describe your MC to montetools, it is internally represented as a stand
 1. Optionally maintain backups of in-progress simulations.
     * In the case of a power outage, you do not want to lose potentially days of simulations. You can restart the simulations from the backup.
     * Similarly, it can happen that the system runs out of RAM for large sample sizes. In this situation, all previous results will be backed up.
-1. Extend existing Monte Carlo simulations, maintaining reproducibility.
+1. Extend an existing MC, maintaining reproducibility.
     * Suppose you initially did 500 simulations but want to get to 1000. You can add on to the number of simulations, and the combined results will still be numerically reproducible, and will be equivalent to if you had run 1000 to begin with.
-1. Merge Monte Carlo simulations.
-    * You can run simulations of part of a Monte Carlo on one computer, and simulations of a different part on a different computer, and merge.
+1. Merge MC simulations.
+    * You can run simulations of part of an MC on one computer, and simulations of a different part on a different computer, and merge.
 1. Output results to a LaTeX table.
     * It is important that results be publication ready, so no manual tweaking is needed. This way, if you make improvements to the code, everything in your paper adapts seamlessly.
 1. Archive of past results, including corresponding Git info.
@@ -49,7 +50,7 @@ Once you describe your MC to montetools, it is internally represented as a stand
 
 Suppose we want to estimate the population mean from a sample. And suppose we assume the population has a symmetric distribution, so the mean equals the median. Two candidates to estimate the population mean are thus (1) the sample mean and (2) the sample median.
 
-Here we will walk through an example of how to use montetools. We first build the the main components of an MC, which we will pass as arguments to `mc_run()`. We will call the object `<arg>_` (note the underscore) that corresponds to argument `<arg>` of `mc_run()`.
+Here we will walk through an example of how to use montetools. We first build the main components of an MC, which we will pass as arguments to `mc_run()`. We will call the object `<arg>_` (note the underscore) that corresponds to argument `<arg>` of `mc_run()`.
 
 ## `dgp_params`
 The data generating process parameters (DGPPs) are the parameters that will be passed to the data generating process (DGP) (more on the DGP below). These parameters will be hidden from the statistic. These parameters, or parameterizations of them, are usually on the rows in an MC table.
@@ -68,7 +69,7 @@ The vector of sample sizes. These are often the columns in an MC table.
 
 ## `dgp`
 
-A function that inputs two arguments, 'dgp_param' (an element of 'dgp_params'); and 'n', the sample size (an element of 'nvec'). Our `dgp()` must return one simulated data frame that montetools will pass to the argument with give for `statistics`.
+A function that inputs two arguments, 'dgp_param' (an element of 'dgp_params'); and 'n', the sample size (an element of 'nvec'). Our `dgp()` must return one simulated data frame.
 
     dgp_ <- function(dgp_param, n) {
       rnorm(n = n, mean = dgp_param[["mean"]], sd = dgp_param[["sd"]])
@@ -76,14 +77,14 @@ A function that inputs two arguments, 'dgp_param' (an element of 'dgp_params'); 
 
 ## `dgpp_to_poi`
 
-A function that takes as input one `dgp_param` and outputs the parameter of interest (POI). For estimation, the POI is what statistic() is estimating. The return is a list of length 2, where the first element is the numeric POI and the second element is a character label for the POI.
+A function that takes as input one `dgp_param` and outputs the parameter of interest (POI). For estimation, the POI is what `statistic()` is estimating. For example, squared error is often useful to calculate, and when aggregated using the mean will be the simulated mean squared error (MSE). The return is a list of length 2, where the first element is the numeric POI and the second element is a character label for the POI.
 
     dgpp_to_poi_ <- function(dgp_param) {
-      # The first element in this list is the actual POI. i.e., the parameter that
-      # the diagnostic will use to compare to the estimator to calculate the bias,
-      # or MSE, etc.
-      # The second element is not used for calculation, it is a character string used
-      # for printing.
+      # The first element in the list below is the actual numeric POI,
+      # i.e., the parameter that the diagnostic will use to compare to
+      # the estimator to calculate the bias, MSE, etc.
+      # The second element is not used for calculation; it is a character
+      # string used for printing.
       ret_l <- list(
                     poi = dgp_param[["mean"]],
                     # the label is used for referring to the parameter in progress
@@ -107,7 +108,7 @@ The list of statistics that will process the simulated data sets. In our case, w
 
     statistics_ <- function(dataf) {
       # since our dgp() returns a vector, the "dataf" input here is
-      # also a vector. In more complicated examples, dgp() will return
+      # also a vector. In most interesting examples, dgp() will return
       # a data frame, e.g., with columns x and y.
 
       # a 2x1 matrix. Each row is a different statistic.
@@ -122,25 +123,26 @@ The list of statistics that will process the simulated data sets. In our case, w
 
 The number of simulations. For each combination of DGPP and sample size, this is the number of simulations that will be run.
 
-    # when first setting things up, start with a small 'nsims' (e.g., 3) to make sure no error. Then increase.
+    # when first setting things up, start with a small 'nsims' (e.g., 3)
+    # to make sure there is no error. Then increase.
     nsims_ <- 1000
 
 ## `diagnostics`
 
-The list of diagnostics. Since we're doing estimation, a diagnostic looks at the difference from the estimator to the POI.
+The list of diagnostics. Since we're doing estimation, a diagnostic compares the estimator to the POI.
 
     # we use two built-in diagnostics to report the bias and MSE.
     diagnostics_ <- list(diag_est_bias, diag_est_sq_error)
 
 ## `parallel`
 
-Set to TRUE for the simulations to be run in parallel, or FALSE for sequential. Or (recommended) leave as NA so that you can control things at a finer detail by calling `future:::plan()`.
+Set to TRUE for the simulations to be run in parallel, or FALSE for sequential. Or (recommended) leave as NA so that you can control things at a finer detail by calling `future:::plan()` before running the simulations.
 
     # Setting to TRUE doesn't make a difference for this example because
-    # dgp() and statistic() are very fast.
+    # dgp() and statistics() are very fast.
     parallel_ <- FALSE
 
-The number of columns is usually `length(nvec)`. The number of rows is usually `length(dgp_params)` times the number of statistics returned by `statistics()`.
+<!-- (todo: where to put this?) The number of columns is usually `length(nvec)`. The number of rows is usually `length(dgp_params)` times the number of statistics returned by `statistics()`.-->
 
 ## Putting everything together
 
@@ -183,12 +185,12 @@ Now we put everything together and finally call `mc_run()`.
 
 ## What to do after the run?
 
-The first thing you should do is to save the `mc` object we created as an Rds file.
+The first thing we should do is to save the `mc` object we created as an Rds file.
 
-    # The resulting file is 740K, and it has the realized values of statistic() for
-    # every simulation.
-    # You can use the `compress = 'xz'` argument to get a file size of 308K, but
-    # when you read in the file with `readRDS()` it will be slower.
+    # The resulting file is 740K, and it has the observed values of
+    # statistics() for every simulation.
+    # You can use the "compress = 'xz'" argument to get a file size of 308K,
+    # but when you read in the file with "readRDS()" it will be slower.
     saveRDS(mc, file = "mc.Rds")
 
 We can output the results of our MC to a LaTeX table as follows:
@@ -201,7 +203,7 @@ After compilation, this results in the following PDF file:
 
 ## Adding diagnostic without rerunning
 
-Referee #1 asks for the result of the mean absolute error, in addition to what we previously calculated, the MSE. We can address this without rerunning the simulations. The `mc` object has all realized values of `statistic()` so we just need to rerun the diagnostic part, which is very fast.
+Referee #1 asks for the results of the mean absolute error (MAE), in addition to what we previously calculated, the MSE. We can address this without rerunning the simulations. The `mc` object has all realized values of `statistics()` so we just need to rerun the diagnostic part, which is very fast.
 
 <!-- also, we mant want to remove the bias diag. The sample mean and median are both unbiased. We might want to have that diagnostic for the in-progress results just to raise a red flag if something is wrong. Finally, it gives us an idea of whether the nsims is high enough-->
 
@@ -234,6 +236,8 @@ It is helpful to be able to reproduce your results after upgrading other R packa
 
 <!-- Similarly, you can send your mc.Rds file to coauthors.-->
 
+## Slow but sure
+
 You can check whether every one of your simulations (and thus aggregate results) are exactly reproducible. This is slow because all simulations must be run again.
 
     # Will give an error if the reproduction fails (i.e., if any observed value of the estimator
@@ -243,7 +247,10 @@ You can check whether every one of your simulations (and thus aggregate results)
     took the sims to run, and the package versions used, which could be different.
     mc_reproduced <- mc_reproduce(mc)
 
-A much quicker approach is to check that the first k (e.g., 10) statistic realizations are exactly the same, which would suggest that the rest would also likely be the same.
+
+## Quick and usually good enough
+
+A much quicker approach is to check that the first $k$ (e.g., 10) realizations of the statistics are exactly the same, which would suggest that the rest would also likely be the same.
 
     # If any simulation results in a different observed statistic, mc_reproduce()
     # will give an error.
