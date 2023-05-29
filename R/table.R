@@ -261,9 +261,11 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
 
   nobs_idx <- (ncol_other + 1):ncol(scarf)
 
+  # keywords: thousands separator, comma
+  #
   # todo: In a quick test, this actually didn't make a difference in many
   #       situations. Document in which case it does make a difference.
-  # Replace "10000" with "10{,}000" or 10,000 depending on escape.
+  # Replace "10000" with "10{,}000" or 10,000 depending on "escape".
   # We could alternatively do this substitution after the call to xtable,
   # and thus always use {,}.
   if (escape) {
