@@ -45,12 +45,17 @@ Please make feature requests! Here is a list of current features:
     * The results of one chunk (i.e., combination of sample size and data generating process parameter) are invariant to the other sample sizes and parameters included in the table. Thus, numerical reproducibility is preserved. This way, you do not need to rerun all simulations from scratch for them to be numerically reproducible.
 1.  * Extensible hook system. montetools was created with extensibility in mind. In fact, features such as in-progress results, backups, and extending and reproducing MCs were all implemented using the hook mechanism. That is, a user could have written these features without modifying the core code of montetools.
 
+# Installation
+
+montetools will eventually be on CRAN after some testing and fixes, but until then you can install the package from this GitHub repository. First, make sure you have the "remotes" package installed and then run the following:
+
+    remotes::install_github("scottkosty/montetools", upgrade = FALSE)
 
 # Tutorial example
 
 Suppose we want to estimate the population mean from a sample. And suppose we assume the population has a symmetric distribution, so the mean equals the median. Two candidates to estimate the population mean are thus (1) the sample mean and (2) the sample median.
 
-Here we will walk through an example of how to use montetools. We first build the main components of an MC, which we will pass as arguments to `mc_run()`. We will call the object `<arg>_` (note the underscore) that corresponds to argument `<arg>` of `mc_run()`.
+Here we will walk through an example of how to use montetools. We first build the main components of an MC, which we will pass as arguments to `mc_run()`. We will call the object `<arg>_` (note the underscore) that corresponds to argument `<arg>` of `mc_run()`. The commands are introduced one-by-one with explanations, but it is easiest to just read the explanations and then copy/paste the big code chunk at the end ("Putting everything together").
 
 ## `dgp_params`
 The data generating process parameters (DGPPs) are the parameters that will be passed to the data generating process (DGP) (more on the DGP below). These parameters will be hidden from the statistic. These parameters, or parameterizations of them, are usually on the rows in an MC table.
