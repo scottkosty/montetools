@@ -480,17 +480,40 @@ make_table_standalone <- function(tex_lines) {
 #' @title MC table compilation
 #' @param tex_f The path (with .tex extension) to the input file.
 #' @param pdf_file The path (with .pdf extension) to the output file.
+#' @param chdir Change directory to where 'tex_f' is and perform compilation there on the base filename. Otherwise, if 'tex_f' has, e.g., a tilde in it, LaTeX compilation could fail.
 #' @eval param_verbose()
-try_tex_compile <- function(tex_f, pdf_file, verbose = 1) {
+try_tex_compile <- function(tex_f, pdf_file, chdir = TRUE, verbose = 1) {
   # TODO: also accept args to pass to mc_diags ?
 
-  silent_ <- (verbose <= 1)
+  if (chdir) {
+    dir_for_tex_comp <- dirname(tex_f)
 
+    wd_orig <- getwd()
+    setwd(dir_for_tex_comp)
+    # we change back below, but just in case something goes wrong in-between
+    on.exit(setwd(wd_orig), add = TRUE)
+
+    file_ <- basename(tex_f)
+    pdf_file_ <- gsub("tex$", "pdf", file_)
+  } else {
+    file_ <- tex_f
+    pdf_file_ <- pdf_file
+  }
+
+  silent_ <- (verbose <= 1)
   try_ <- try(
-              tinytex::latexmk(tex_f, pdf_file = pdf_file, install_packages = FALSE),
+              tinytex::latexmk(file = file_, pdf_file = pdf_file_, install_packages = FALSE),
               silent = silent_
   )
   if (inherits(try_, "try-error") && verbose >= 1) {
     message("LaTeX compilation of the table failed.")
   }
+
+  if (chdir) {
+    setwd(wd_orig)
+    from_ <- file.path(dir_for_tex_comp, pdf_file_)
+    file.rename(from = from_, to = pdf_file)
+  }
+
+  return(NULL)
 }
