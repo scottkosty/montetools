@@ -95,6 +95,7 @@ mcp_to_table <- function(l, aggregators) {
 #' @param rounder The rounder to be used.
 #' @importFrom plyr rbind.fill
 #' @importFrom xtable xtable
+#' @importFrom tinytex tinytex_root
 #' @export
 #' @details If a .pdf is specified in output_file, if the compilation fails an error is not given.
 mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
@@ -428,6 +429,10 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
   # TODO: "png" is work in progress. I haven't documented it yet. Need to find
   #       a way to crop PDF (use pdfcrop?) and to convert to png.
   if (length(pdf_idx) == 1) {
+    if (tinytex_root() == "") {
+      stop("'tinytex' (the R package that handles LaTeX compilation) could not find a LaTeX installation. You can ask 'tinytex' to install one by running tinytex::install_tinytex() in R, but note that this will take (1) a few minutes and (2) a considerable amount of space (~100MB).")
+    }
+
     tex_standalone <- make_table_standalone(tex_lines = table_lines_final)
     # Even if user additionally wants a .tex file, we still have to use
     # a temporary file because we need to compile a *standalone* .tex.
@@ -467,9 +472,6 @@ make_table_standalone <- function(tex_lines) {
 #' @param pdf_file The path (with .pdf extension) to the output file.
 #' @eval param_verbose()
 try_tex_compile <- function(tex_f, pdf_file, verbose = 1) {
-
-  # TODO: have tinytex as "suggests", not required?
-
   # TODO: also accept args to pass to mc_diags ?
 
   try_ <- try(
