@@ -85,7 +85,7 @@ mcp_to_table <- function(l, aggregators) {
 #' Document feature that it supports *partial* tables (e.g., if not all sims
 #' done for all nobs or for all params).
 #' @eval param_diags_or_mc()
-#' @param output_file A vector of file names to output. Leave as NA (default) to print to the screen (useful when using knitr). The vector may have length greater than 1 if you want to output multiple formats. Currently, only ".tex" and ".pdf" are supported. If you specify a ".pdf" extension, you must have a TeX distribution installed (e.g., TeX Live or MiKTeX).
+#' @param output_file A vector of file names to output. Leave as NA (default) to print to the screen (useful when using knitr). The vector may have length greater than 1 if you want to output multiple formats. Currently, only ".tex" and ".pdf" are supported. If you specify a ".pdf" extension, you must have a TeX distribution installed (e.g., TeX Live or MiKTeX). If you don't have one installed, consider running tinytex::install_tinytex() in R, which installs a lightweight (~100MB) TeX distribution.
 #' @param colname_stat Set to NA to remove the column. By default, "stat.", or if number of statistics is 1 it is NA.
 #' @param colname_diag Set to NA to remove the column. By default, "diag.", or if number of diagnostics is 1 it is NA.
 #' @param colname_poi Set to NA to remove the column. By default, "param.", or if number of parameters is 1 it is NA.
