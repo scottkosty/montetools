@@ -93,6 +93,7 @@ mcp_to_table <- function(l, aggregators) {
 #' @param aggregators What function should be used to summarize the diagnostics of each simulation (typically the default "mean").
 #' @param display_nsims Can be "auto", "none", "row", or "multicol".
 #' @param rounder The rounder to be used.
+#' @eval param_verbose()
 #' @importFrom plyr rbind.fill
 #' @importFrom xtable xtable
 #' @importFrom tinytex tinytex_root
@@ -111,7 +112,8 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
                      escape = FALSE,
                      # TODO: can be "auto", "none", "row", "multicol"
                      display_nsims = "row",
-                     rounder = gen_rounder_fixed(digits = 3)
+                     rounder = gen_rounder_fixed(digits = 3),
+                     verbose = 1
                      ) {
 
   # this chunk should be near the top, so that, e.g., nsims_vec below is valid.
@@ -437,8 +439,16 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
     # Even if user additionally wants a .tex file, we still have to use
     # a temporary file because we need to compile a *standalone* .tex.
     tex_standalone_f <- tempfile(fileext = ".tex")
+    if (verbose >= 2) {
+      # Useful to debug issues where R uses a temp file name with non-standard
+      # characters. e.g., I have seen the following temp file, which causes
+      # problems due to the ~ in the user name (and thus the path):
+      #   C:/Users/ANON~1/AppData/Local/Temp/RtmpWSFhmD/file4fbc2b2943bf.tex
+      message("intermediate TeX file location: ", tex_standalone_f)
+    }
     writeLines(tex_standalone, con = tex_standalone_f)
     pdf_file <- output_file[[pdf_idx]]
+    if (verbose >= 2) message("output PDF file (future) location: ", pdf_file)
     try_tex_compile(tex_f = tex_standalone_f, pdf_file = pdf_file)
   }
 

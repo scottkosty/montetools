@@ -14,7 +14,8 @@ mc_table(
   colname_diag,
   escape = FALSE,
   display_nsims = "row",
-  rounder = gen_rounder_fixed(digits = 3)
+  rounder = gen_rounder_fixed(digits = 3),
+  verbose = 1
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ mc_table(
 \item{display_nsims}{Can be "auto", "none", "row", or "multicol".}
 
 \item{rounder}{The rounder to be used.}
+
+\item{verbose}{An integer (default of 1) to control the level feedback. Set to 0 to turn off messages that are not warnings or errors. At value 1, basic progress information is printed; at values 2 and higher, increasingly more messages are printed that are useful when debugging an unexpected result.}
 }
 \description{
 Document feature that it supports *partial* tables (e.g., if not all sims
