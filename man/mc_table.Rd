@@ -21,7 +21,7 @@ mc_table(
 \arguments{
 \item{diags_or_mc}{The return from \code{\link{mc_diags}}. If instead you pass an MC object, the diagnostics will be run automatically if you specified the argument 'diagnostics' to mc_run().}
 
-\item{output_file}{A vector of file names to output. Leave as NA (default) to print to the screen (useful when using knitr). The vector may have length greater than 1 if you want to output multiple formats. Currently, only ".tex" and ".pdf" are supported. If you specify a ".pdf" extension, you must have a TeX distribution installed (e.g., TeX Live or MiKTeX). If you don't have one installed, consider running tinytex::install_tinytex() in R, which installs a lightweight (~100MB) TeX distribution.}
+\item{output_file}{A vector of file names to output. Leave as NA (default) to print to the screen (useful when using knitr). The vector may have length greater than 1 if you want to output multiple formats. Currently, only ".tex" and ".pdf" are supported. If you specify a ".pdf" extension, you must have a TeX distribution installed (e.g., TeX Live or MiKTeX). If you don't have one installed, consider running tinytex::install_tinytex() in R, which installs a relatively lightweight (~250MB) TeX distribution.}
 
 \item{aggregators}{What function should be used to summarize the diagnostics of each simulation (typically the default "mean").}
 
