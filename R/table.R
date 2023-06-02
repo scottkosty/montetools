@@ -484,9 +484,11 @@ make_table_standalone <- function(tex_lines) {
 try_tex_compile <- function(tex_f, pdf_file, verbose = 1) {
   # TODO: also accept args to pass to mc_diags ?
 
+  silent_ <- (verbose <= 1)
+
   try_ <- try(
               tinytex::latexmk(tex_f, pdf_file = pdf_file, install_packages = FALSE),
-              silent = TRUE
+              silent = silent_
   )
   if (inherits(try_, "try-error") && verbose >= 1) {
     message("LaTeX compilation of the table failed.")
