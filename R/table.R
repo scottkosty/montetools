@@ -449,7 +449,7 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
     writeLines(tex_standalone, con = tex_standalone_f)
     pdf_file <- output_file[[pdf_idx]]
     if (verbose >= 2) message("output PDF file (future) location: ", pdf_file)
-    try_tex_compile(tex_f = tex_standalone_f, pdf_file = pdf_file)
+    try_tex_compile(tex_f = tex_standalone_f, pdf_file = pdf_file, verbose = verbose)
   }
 
   if (length(na_idx) == 1) {
