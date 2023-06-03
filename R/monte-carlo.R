@@ -344,8 +344,8 @@ do_mc_run <- function(dgp_params = NULL, nvec, dgp, dgpp_to_poi = NULL, statisti
     }
 
     if (!is.na(plan_)) {
-      # This code based on code in ?plan
-      # plan(plan_) returns the old plan
+      # This code is based on code in ?plan.
+      # plan(plan_) returns the old plan.
       oplan <- plan(plan_)
       on.exit(plan(oplan), add = TRUE)
     }
