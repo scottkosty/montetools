@@ -36,7 +36,7 @@ Please make feature requests! Here is a list of current features:
 1. Output results to a LaTeX table.
     * It is important that results be publication ready, so no manual tweaking is needed. This way, if you make improvements to the code, everything in your paper adapts seamlessly.
 1. Archive of past results, including corresponding Git info.
-    * With the archive feature, you can always retrieve a past MC run. montetools can automatically store past MC runs, along with the corresponding state of code (e.g., the Git hash and Git diff), so you can answer questions like "I remember a month ago, one of the MC runs I did ended up with a negative bias. Which run was that and what change in the code caused that?"
+    * With the archive feature montetools automatically stores past MC runs, along with the corresponding state of code (e.g., the Git hash and Git diff), so you can answer questions like "I remember a month ago, one of the MC runs I did ended up with a negative bias. Which run was that and what change in the code caused that?"
 1. Enforce separation of parameters and statistics, and make explicit what the statistic "knows".
     * You explain to montetools what the statistic is allowed to see. e.g., it can see the functional form of the specification but not the coefficients.
 1. Analyzing the results is a separate step.
