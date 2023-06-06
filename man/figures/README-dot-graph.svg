@@ -31,8 +31,8 @@
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:zoom="0.83673509"
-     inkscape:cx="521.07292"
-     inkscape:cy="314.91448"
+     inkscape:cx="542.58511"
+     inkscape:cy="314.91449"
      inkscape:window-width="1920"
      inkscape:window-height="1136"
      inkscape:window-x="0"
@@ -42,25 +42,25 @@
   <g
      id="graph0"
      class="graph"
-     transform="scale(1 1) rotate(0) translate(4 310)">
+     transform="translate(4,310)">
     <title
        id="title2">monte</title>
     <!-- mc_run -->
     <g
        id="node1"
        class="node"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title6">mc_run</title>
       <ellipse
          fill="none"
-         stroke="black"
+         stroke="#000000"
          cx="285.28"
          cy="-153"
          rx="109.38"
          ry="18"
          id="ellipse8"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <text
          text-anchor="middle"
          x="285.28"
@@ -68,24 +68,24 @@
          font-family="Times,serif"
          font-size="14.00"
          id="text10"
-         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:'Times, serif, Bold';font-family:Times, serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle">montetools::mc_run()</text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.0031px;font-family:Times, serif;-inkscape-font-specification:'Times, serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">montetools::mc_run()</text>
     </g>
     <!-- mc -->
     <g
        id="node2"
        class="node"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title13">mc</title>
       <ellipse
          fill="none"
-         stroke="black"
+         stroke="#000000"
          cx="678.31"
          cy="-153"
-         rx="57.69"
+         rx="57.689999"
          ry="18"
          id="ellipse15"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <text
          text-anchor="middle"
          x="678.31"
@@ -93,27 +93,27 @@
          font-family="Times,serif"
          font-size="14.00"
          id="text17"
-         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:'Times, serif, Bold';font-family:Times, serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle">MC object</text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.0031px;font-family:Times, serif;-inkscape-font-specification:'Times, serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">MC object</text>
     </g>
     <!-- mc_run&#45;&gt;mc -->
     <g
        id="edge4"
        class="edge"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title20">mc_run-&gt;mc</title>
       <path
          fill="none"
-         stroke="black"
-         d="M394.68,-153C463.66,-153 550.82,-153 609.98,-153"
+         stroke="#000000"
+         d="m 394.68,-153 c 68.98,0 156.14,0 215.3,0"
          id="path22"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <polygon
-         fill="black"
-         stroke="black"
-         points="610.33,-156.5 620.33,-153 610.33,-149.5 610.33,-156.5"
+         fill="#000000"
+         stroke="#000000"
+         points="620.33,-153 610.33,-149.5 610.33,-156.5 "
          id="polygon24"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <text
          text-anchor="middle"
          x="507.47"
@@ -121,7 +121,7 @@
          font-family="Times, serif"
          font-size="14px"
          id="text26"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <!-- graph -->
     <g
@@ -131,33 +131,33 @@
          id="title29">graph</title>
       <image
          xlink:href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjwh RE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4wLy9FTiIgImh0dHA6Ly93d3cu dzMub3JnL1RSLzIwMDEvUFItU1ZHLTIwMDEwNzE5L0RURC9zdmcxMC5kdGQiPgo8c3ZnIHdpZHRo PSIxNGNtIiBoZWlnaHQ9IjE2Y20iIHZpZXdCb3g9IjY1MCAxNjYgMjY4IDMwMSIgeG1sbnM9Imh0 dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv MTk5OS94bGluayI+CiAgPGcgaWQ9IkJhY2tncm91bmQiPgogICAgPGc+CiAgICAgIDxsaW5lIHN0 eWxlPSJmaWxsOiBub25lOyBzdHJva2Utb3BhY2l0eTogMTsgc3Ryb2tlLXdpZHRoOiA2OyBzdHJv a2U6ICMwMDAwMDAiIHgxPSI2NjEiIHkxPSI0NTciIHgyPSI2NjEuOTUiIHkyPSIxODQuMjA4Ii8+ CiAgICAgIDxwb2x5Z29uIHN0eWxlPSJmaWxsOiAjMDAwMDAwOyBmaWxsLW9wYWNpdHk6IDE7IHN0 cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZTogIzAwMDAwMCIgZmlsbC1y dWxlPSJldmVub2RkIiBwb2ludHM9IjY2MS45NzcsMTc2LjcwOCA2NjYuOTQyLDE4Ni43MjYgNjYx Ljk1LDE4NC4yMDggNjU2Ljk0MiwxODYuNjkxICIvPgogICAgPC9nPgogICAgPGc+CiAgICAgIDxs aW5lIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2Utb3BhY2l0eTogMTsgc3Ryb2tlLXdpZHRoOiA2 OyBzdHJva2U6ICMwMDAwMDAiIHgxPSI2NjIiIHkxPSI0NTYiIHgyPSI5MDAuNzkyIiB5Mj0iNDU2 Ii8+CiAgICAgIDxwb2x5Z29uIHN0eWxlPSJmaWxsOiAjMDAwMDAwOyBmaWxsLW9wYWNpdHk6IDE7 IHN0cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZTogIzAwMDAwMCIgZmls bC1ydWxlPSJldmVub2RkIiBwb2ludHM9IjkwOC4yOTIsNDU2IDg5OC4yOTIsNDYxIDkwMC43OTIs NDU2IDg5OC4yOTIsNDUxICIvPgogICAgPC9nPgogICAgPGxpbmUgc3R5bGU9ImZpbGw6IG5vbmU7 IHN0cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZTogIzAwMDAwMCIgeDE9 IjY2MSIgeTE9IjQwMiIgeDI9IjcyNSIgeTI9IjI5OSIvPgogICAgPGxpbmUgc3R5bGU9ImZpbGw6 IG5vbmU7IHN0cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZTogIzAwMDAw MCIgeDE9IjcyNCIgeTE9IjI5OCIgeDI9Ijg1MCIgeTI9IjI2OCIvPgogICAgPGxpbmUgc3R5bGU9 ImZpbGw6IG5vbmU7IHN0cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZTog IzAwMDAwMCIgeDE9Ijg1MSIgeTE9IjI2OCIgeDI9Ijg5NiIgeTI9IjE5MCIvPgogICAgPGxpbmUg c3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0 cm9rZTogIzAwMDAwMCIgeDE9IjY2MSIgeTE9IjQ0NSIgeDI9IjcyNSIgeTI9IjQyMiIvPgogICAg PGxpbmUgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6 IDY7IHN0cm9rZTogIzAwMDAwMCIgeDE9IjcyNCIgeTE9IjQyMSIgeDI9Ijg1MiIgeTI9IjM4MiIv PgogICAgPGxpbmUgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1vcGFjaXR5OiAxOyBzdHJva2Ut d2lkdGg6IDY7IHN0cm9rZTogIzAwMDAwMCIgeDE9Ijg1MSIgeTE9IjM4MiIgeDI9Ijg5NSIgeTI9 IjM0OCIvPgogICAgPGxpbmUgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1vcGFjaXR5OiAxOyBz dHJva2Utd2lkdGg6IDY7IHN0cm9rZTogIzAwMDAwMCIgeDE9IjY2MSIgeTE9IjQxNyIgeDI9Ijcy NCIgeTI9IjM1NCIvPgogICAgPGxpbmUgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1vcGFjaXR5 OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZTogIzAwMDAwMCIgeDE9IjcyNCIgeTE9IjM1NSIg eDI9Ijg1MSIgeTI9IjI5MSIvPgogICAgPGxpbmUgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1v cGFjaXR5OiAxOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZTogIzAwMDAwMCIgeDE9Ijg1MSIgeTE9 IjI5MCIgeDI9Ijg5NiIgeTI9IjI4NCIvPgogIDwvZz4KPC9zdmc+Cg== "
-         width="144px"
-         height="144px"
+         width="144"
+         height="144"
          preserveAspectRatio="xMinYMin meet"
-         x="773.158"
+         x="773.15802"
          y="-306"
          id="image31"
-         style="stroke-width:50.008647;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:50.0086;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <!-- mc&#45;&gt;graph -->
     <g
        id="edge6"
        class="edge"
-       style="stroke-width:2.53300137;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.533;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title34">mc-&gt;graph</title>
       <path
          fill="none"
-         stroke="black"
-         d="M710.32,-168.24C725.62,-175.75 744.85,-185.2 763.92,-194.58"
+         stroke="#000000"
+         d="m 710.32,-168.24 c 15.3,-7.51 34.53,-16.96 53.6,-26.34"
          id="path36"
-         style="stroke-width:2.53300137;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.533;stroke-miterlimit:4;stroke-dasharray:none" />
       <polygon
-         fill="black"
-         stroke="black"
-         points="762.44,-197.75 772.96,-199.02 765.53,-191.46 762.44,-197.75"
+         fill="#000000"
+         stroke="#000000"
+         points="772.96,-199.02 765.53,-191.46 762.44,-197.75 "
          id="polygon38"
-         style="stroke-width:2.53300137;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.533;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <!-- table -->
     <g
@@ -179,156 +179,156 @@
     <g
        id="edge5"
        class="edge"
-       style="stroke-width:2.53300137;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.533;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title46">mc-&gt;table</title>
       <path
          fill="none"
-         stroke="black"
-         d="M710.32,-137.76C725.62,-130.25 744.85,-120.8 763.92,-111.42"
+         stroke="#000000"
+         d="m 710.32,-137.76 c 15.3,7.51 34.53,16.96 53.6,26.34"
          id="path48"
-         style="stroke-width:2.53300137;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.533;stroke-miterlimit:4;stroke-dasharray:none" />
       <polygon
-         fill="black"
-         stroke="black"
-         points="765.53,-114.54 772.96,-106.98 762.44,-108.25 765.53,-114.54"
+         fill="#000000"
+         stroke="#000000"
+         points="772.96,-106.98 762.44,-108.25 765.53,-114.54 "
          id="polygon50"
-         style="stroke-width:2.53300137;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.533;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <!-- DGP -->
     <g
        id="node3"
        class="node"
-       style="stroke-width:2.85049288;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85049;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title53">DGP</title>
       <ellipse
          fill="none"
-         stroke="black"
-         cx="69.54"
+         stroke="#000000"
+         cx="69.540001"
          cy="-207"
-         rx="31.7"
+         rx="31.700001"
          ry="18"
          id="ellipse55"
-         style="stroke-width:2.85049288;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85049;stroke-miterlimit:4;stroke-dasharray:none" />
       <text
          text-anchor="middle"
-         x="69.54"
+         x="69.540001"
          y="-203.3"
          font-family="Times,serif"
          font-size="14.00"
          id="text57"
-         style="stroke-width:5.00086;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:'Times, serif, Bold';font-family:Times, serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle">DGP</text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.0031px;font-family:Times, serif;-inkscape-font-specification:'Times, serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;stroke-width:5.00086;stroke-miterlimit:4;stroke-dasharray:none">DGP</text>
     </g>
     <!-- DGP&#45;&gt;mc_run -->
     <g
        id="edge1"
        class="edge"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title60">DGP-&gt;mc_run</title>
       <path
          fill="none"
-         stroke="black"
-         d="M98.93,-199.83C128.34,-192.4 175.44,-180.5 214.8,-170.55"
+         stroke="#000000"
+         d="m 98.93,-199.83 c 29.41,7.43 76.51,19.33 115.87,29.28"
          id="path62"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <polygon
-         fill="black"
-         stroke="black"
-         points="215.78,-173.92 224.62,-168.07 214.07,-167.13 215.78,-173.92"
+         fill="#000000"
+         stroke="#000000"
+         points="224.62,-168.07 214.07,-167.13 215.78,-173.92 "
          id="polygon64"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <!-- statistics -->
     <g
        id="node4"
        class="node"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title67">statistics</title>
       <ellipse
          fill="none"
-         stroke="black"
-         cx="69.54"
+         stroke="#000000"
+         cx="69.540001"
          cy="-153"
          rx="53.09"
          ry="18"
          id="ellipse69"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <text
          text-anchor="middle"
-         x="69.54"
+         x="69.540001"
          y="-149.3"
          font-family="Times,serif"
          font-size="14.00"
          id="text71"
-         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:'Times, serif, Bold';font-family:Times, serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle">statistics</text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.0031px;font-family:Times, serif;-inkscape-font-specification:'Times, serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">statistics</text>
     </g>
     <!-- statistics&#45;&gt;mc_run -->
     <g
        id="edge2"
        class="edge"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title74">statistics-&gt;mc_run</title>
       <path
          fill="none"
-         stroke="black"
-         d="M123.1,-153C136.16,-153 150.69,-153 165.52,-153"
+         stroke="#000000"
+         d="m 123.1,-153 c 13.06,0 27.59,0 42.42,0"
          id="path76"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <polygon
-         fill="black"
-         stroke="black"
-         points="165.83,-156.5 175.83,-153 165.83,-149.5 165.83,-156.5"
+         fill="#000000"
+         stroke="#000000"
+         points="175.83,-153 165.83,-149.5 165.83,-156.5 "
          id="polygon78"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <!-- sample sizes -->
     <g
        id="node5"
        class="node"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title81">sample sizes</title>
       <ellipse
          fill="none"
-         stroke="black"
-         cx="69.54"
+         stroke="#000000"
+         cx="69.540001"
          cy="-99"
-         rx="69.59"
+         rx="69.589996"
          ry="18"
          id="ellipse83"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <text
          text-anchor="middle"
-         x="69.54"
-         y="-95.3"
+         x="69.540001"
+         y="-95.300003"
          font-family="Times,serif"
          font-size="14.00"
          id="text85"
-         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:'Times, serif, Bold';font-family:Times, serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle">sample sizes</text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.0031px;font-family:Times, serif;-inkscape-font-specification:'Times, serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">sample sizes</text>
     </g>
     <!-- sample sizes&#45;&gt;mc_run -->
     <g
        id="edge3"
        class="edge"
-       style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none">
       <title
          id="title88">sample sizes-&gt;mc_run</title>
       <path
          fill="none"
-         stroke="black"
-         d="M119.85,-111.46C147.99,-118.57 183.73,-127.6 214.69,-135.42"
+         stroke="#000000"
+         d="m 119.85,-111.46 c 28.14,-7.11 63.88,-16.14 94.84,-23.96"
          id="path90"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
       <polygon
-         fill="black"
-         stroke="black"
-         points="214.01,-138.86 224.56,-137.91 215.72,-132.07 214.01,-138.86"
+         fill="#000000"
+         stroke="#000000"
+         points="224.56,-137.91 215.72,-132.07 214.01,-138.86 "
          id="polygon92"
-         style="stroke-width:2.85061231;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="stroke-width:2.85061;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
   </g>
   <path

@@ -2,7 +2,7 @@
 
 R package to run Monte Carlo (MC) simulations, display results, reproduce them, and everything in-between.
 
-<img src="man/figures/README-dot-graph.svg" width="630"/>
+<img src="man/figures/README-dot-graph.svg" width="830"/>
 
 # Details
 
