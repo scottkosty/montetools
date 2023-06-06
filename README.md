@@ -2,6 +2,8 @@
 
 R package to run Monte Carlo (MC) simulations, display results, reproduce them, and everything in-between.
 
+<img src="man/figures/README-dot-graph.svg" width="630"/>
+
 # Details
 
 This package is especially beneficial for MCs that take considerable amounts of time (e.g., hours, days).
