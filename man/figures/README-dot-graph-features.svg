@@ -59,7 +59,7 @@
 <title>mc&#45;&gt;mc_extended_ss</title>
 <path fill="none" stroke="black" d="M428.72,-181.36C457.8,-175 495.85,-166 529,-156 558.9,-146.98 591.78,-134.95 617.72,-124.95"/>
 <polygon fill="black" stroke="black" points="619.25,-128.11 627.3,-121.23 616.71,-121.59 619.25,-128.11"/>
-<text text-anchor="middle" x="648" y="-144.8" font-family="Times,serif" font-size="14.00">add new sample size</text>
+<text text-anchor="middle" x="631.5" y="-144.8" font-family="Times,serif" font-size="14.00">add sample size</text>
 </g>
 <!-- mc_extended_nsims&#45;&gt;mc_extended_nsims -->
 <g id="edge5" class="edge">
