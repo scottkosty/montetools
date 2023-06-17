@@ -212,7 +212,7 @@ We can output the results of our MC to a LaTeX table as follows:
 
 After compilation, this results in the following PDF file:
 
-<img src="man/figures/README-table1.png" width="630"/>
+<img src="man/figures/README-table1.svg" width="630"/>
 
 ## Adding diagnostic without rerunning
 
@@ -226,7 +226,7 @@ Referee #1 asks for the results of the mean absolute error (MAE), in addition to
     mcdiags <- mc_diags(mc, diagnostics = diagnostics_)
     mc_table(mcdiags, output_file = "table-additional-diag.tex")
 
-<img src="man/figures/README-table-additional-diag.png" width="630"/>
+<img src="man/figures/README-table-additional-diag.svg" width="630"/>
 
 ## Extending results
 
@@ -239,7 +239,7 @@ Referee #2 would like for the MC to have a total of 2500 simulations. Does this 
     mc <- mc_extend(mc, nsims_additional = 1500)
     mc_table(mc, output_file = "table-extended.tex")
 
-<img src="man/figures/README-table-extended.png" width="630"/>
+<img src="man/figures/README-table-extended.svg" width="630"/>
 
 <!-- TODO: need a way to refer to table values like knitr-->
 
