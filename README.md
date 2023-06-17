@@ -208,7 +208,7 @@ The first thing we should do is to save the `mc` object we created as an Rds fil
 
 We can output the results of our MC to a LaTeX table as follows:
 
-    mc_table(mc, output_file = "table.tex")
+    mc_table(mc, output_file = "table1.tex")
 
 After compilation, this results in the following PDF file:
 
