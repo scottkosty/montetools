@@ -90,7 +90,7 @@ A function that inputs two arguments, 'dgp_param' (an element of 'dgp_params'); 
 
 ## `dgpp_to_poi`
 
-A function that takes as input one `dgp_param` and outputs the parameter of interest (POI). For estimation, the POI is what `statistic()` is estimating. For example, squared error is often useful to calculate, and when aggregated using the mean will be the simulated mean squared error (MSE). The return is a list of length 2, where the first element is the numeric POI and the second element is a character label for the POI.
+A function that takes as input one `dgp_param` and outputs the parameter of interest (POI). For estimation, the POI is what `statistic()` is estimating. The return is a list of length 2, where the first element is the numeric POI and the second element is a character label for the POI.
 
     dgpp_to_poi_ <- function(dgp_param) {
       # The first element in the list below is the actual numeric POI,
@@ -142,7 +142,7 @@ The number of simulations. For each combination of DGPP and sample size, this is
 
 ## `diagnostics`
 
-The list of diagnostics. Since we're doing estimation, a diagnostic compares the estimator to the POI.
+The list of diagnostics. Since we're doing estimation, a diagnostic compares the estimator to the POI. For example, squared error is often useful to calculate, and when aggregating across simulations using the (default) mean will be the simulated mean squared error (MSE).
 
     # we use two built-in diagnostics to report the bias and MSE.
     diagnostics_ <- list(diag_est_bias, diag_est_sq_error)
