@@ -210,7 +210,11 @@ We can output the results of our MC to a LaTeX table as follows:
 
     mc_table(mc, output_file = "table1.tex")
 
-After compilation, this results in the following PDF file:
+Similarly, if you have LaTeX installed, you can output directly to PDF:
+
+    mc_table(mc, output_file = "table1.pdf")
+
+This results in the following PDF file:
 
 <img src="man/figures/README-table1.svg" width="630"/>
 
