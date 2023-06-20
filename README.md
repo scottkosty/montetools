@@ -260,8 +260,8 @@ You can check whether every one of your simulations (and thus aggregate results)
     # Will give an error if the reproduction fails (i.e., if any observed value of the estimator
     # is different for any simulation).
     # If the reproduce succeeds, the results are equivalent, but the 'mc'
-    object has other information besides results, such as how much time it
-    took the sims to run, and the package versions used, which could be different.
+    # object has other information besides results, such as how much time it
+    # took the sims to run, and the package versions used, which could be different.
     mc_reproduced <- mc_reproduce(mc)
 
 
