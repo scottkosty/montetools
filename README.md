@@ -36,7 +36,7 @@ Please make feature requests! Here is a list of current features:
     * Suppose you initially did 500 simulations but want to get to 1000. You can add on to the number of simulations, and the combined results will still be numerically reproducible, and will be equivalent to if you had run 1000 to begin with.
 1. Merge MC simulations.
     * You can run simulations of part of an MC on one computer, and simulations of a different part on a different computer, and merge.
-1. Output results to a LaTeX table.
+1. Output results to a LaTeX table or directly to PDF.
     * It is important that results be publication ready, so no manual tweaking is needed. This way, if you make improvements to the code, everything in your paper adapts seamlessly.
 1. Archive of past results, including corresponding Git info.
     * With the archive feature montetools automatically stores past MC runs, along with the corresponding state of code (e.g., the Git hash and Git diff), so you can answer questions like "I remember a month ago, one of the MC runs I did ended up with a negative bias. Which run was that and what change in the code caused that?"
