@@ -26,8 +26,9 @@ Please make feature requests! Here is a list of current features:
 1. Handle errors without stopping remaining simulations.
     * Errors can occur in some statistics, e.g., due to rank deficiency. montetools can be configured to log the error and continue.
     * You can also quickly recover the realized simulation that caused an error, which can be helpful when debugging.
-1. Show partial results in-progress.
+1. Show partial results in-progress, and progress bar.
     * There is no need to wait for the simulations to end to check the current results.
+    * A progress bar is shown (for both parallel and sequential simulations), thanks to [progressr](https://progressr.futureverse.org/). <!-- (TODO: I think I need to add this feature?) you can customize the appearance of the progress bar. -->
 1. Optionally maintain backups of in-progress simulations.
     * In the case of a power outage, you do not want to lose potentially days of simulations. You can restart the simulations from the backup.
     * Similarly, it can happen that the system runs out of RAM for large sample sizes. In this situation, all previous results will be backed up.
