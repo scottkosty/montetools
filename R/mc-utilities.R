@@ -8,6 +8,7 @@ param_mc <- function() {
 
 
 param_diags_or_mc <- function() {
+  # todo: document if it can be a filename. e.g., as used in mc_table().
   c(
     "@param diags_or_mc The return from \\code{\\link{mc_diags}}. If instead you pass an MC object, the diagnostics will be run automatically if you specified the argument 'diagnostics' to mc_run()."
   )
@@ -762,6 +763,7 @@ resolve_diags_or_mc_arg <- function(diags_or_mc) {
     # This assumes that the user argument is called "diags_result".
     # Could alternatively look at the system call to figure it out,
     # but might as well use the same argument name.
+    # Could use a global name and share it with param_diags_or_mc().
     stop("'diags_or_mc' must be the return from mc_diags(), or alternatively the return from mc_run() if you specified the 'diagnostics' argument.")
   }
 }
