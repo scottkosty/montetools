@@ -749,7 +749,17 @@ globals_were_stored <- function(mc) {
 }
 
 
-resolve_diags_or_mc_arg <- function(diags_or_mc) {
+resolve_diags_or_mc_arg <- function(diags_or_mc, verbose = 1) {
+  # todo: share this code with resolve_user_mc_arg() ?
+  if (is.character(diags_or_mc)) {
+    if (!file.exists(diags_or_mc)) {
+      stop("'diags_or_mc' argument is a string, but file not found.")
+    }
+    if (verbose >= 2) message("Reading in .Rds file ", diags_or_mc, "...")
+    diags_or_mc <- readRDS(diags_or_mc)
+    if (verbose >= 2) message("Done.")
+  }
+
   if (inherits(diags_or_mc, "mcdiags")) {
     diags_result <- diags_or_mc
     # nothing to do
