@@ -39,6 +39,24 @@ repo_snapshot <- function() {
 }
 
 
+#' @title Begin a new MC archive entry
+#' @param archive_dir The directory where archive files are stored.
+#' @eval param_verbose()
+#' @details Returns the names of directories in the snapshot dir, sorted by mtime.
+#' @export
+mc_archive_ls <- function(archive_dir = getOption("montetools_archive_dir"), verbose = 1) {
+  # Can't find it based on the name of the directory, because it's hard to
+  # compare, e.g., compname1_5 to compname2_3.
+
+  # todo: file.info() has a lot of helpful info. Allow different sorting criteria?
+
+  dirs_and_times <- sapply(list.files(archive_dir, full.names = TRUE), FUN = file.mtime)
+  sorted_ <- sort(dirs_and_times, decreasing = TRUE)
+  sorted_paths <- names(sorted_)
+  return(sorted_paths)
+}
+
+
 #' @export
 #' @title Begin a new MC archive entry
 #' @param archive_dir The directory where to store the archive files.
