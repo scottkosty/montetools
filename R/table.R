@@ -183,8 +183,16 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
   #relattempt <- 0.5
   #sep_param_latex <- paste0('\\vspace{', relattempt, '\\the\\baselineskip}')
 
-  sep_param_latex <- paste0('\\vspace{', sep_param_cm, 'cm}')
-  sep_diag_latex <- paste0('\\vspace{', sep_diag_cm, 'cm}')
+  if (sep_param_cm != 0) {
+    sep_param_latex <- paste0('\\vspace{', sep_param_cm, 'cm}')
+  } else {
+    sep_param_latex <- ""
+  }
+  if (sep_diag_cm != 0) {
+    sep_diag_latex <- paste0('\\vspace{', sep_diag_cm, 'cm}')
+  } else {
+    sep_diag_latex <- ""
+  }
 
 
   # TODO: without this, I get unwanted lines after the tabular, and the document doesn't
