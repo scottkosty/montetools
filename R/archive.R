@@ -61,7 +61,8 @@ mc_archive_new <- function(name = NA, archive_dir = getOption("montetools_archiv
   archive_dir <- path.expand(archive_dir)
 
   if (!dir.exists(archive_dir)) {
-    dir.create(archive_dir)
+    # todo: document that dir will be created *recursively*.
+    dir.create(archive_dir, recursive = TRUE)
   }
 
   if (is.na(snapshot_name)) {
