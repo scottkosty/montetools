@@ -520,7 +520,17 @@ try_tex_compile <- function(tex_f, pdf_file, chdir = TRUE, verbose = 1) {
   if (chdir) {
     setwd(wd_orig)
     from_ <- file.path(dir_for_tex_comp, pdf_file_)
-    file.rename(from = from_, to = pdf_file)
+    if (file.exists(from_)) {
+      file.rename(from = from_, to = pdf_file)
+    } else {
+      # to trigger this branch:
+      # mc_table(mc, output_file = "table.pdf", colname_poi = "\\parameter")
+      # TODO: compiling to PDF should give an error in this case.
+      #       i.e., do not wrap tinytex in a try() since here the user explicitly
+      #       asks for LaTeX compilation.
+      # TODO: copy the log file to the user directory.
+      warning("Could not copy PDF file. Compilation failure?")
+    }
   }
 
   return(NULL)
