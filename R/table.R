@@ -81,9 +81,9 @@ mcp_to_table <- function(l, aggregators) {
 #   paste(abc, collapse = "\n")
 # or does it work as is?
 # If it needs the collapse, maybe give arg. Or make format = "knitr" that does it.
+# ^^ cat() also works, and this is documented below. Is that enough?
 
-#' Document feature that it supports *partial* tables (e.g., if not all sims
-#' done for all nobs or for all params).
+#' @title Output an MC to a .tex or .pdf table.
 #' @eval param_diags_or_mc()
 #' @param output_file A vector of file names to output. Leave as NA (default) to print to the screen (useful when using knitr). The vector may have length greater than 1 if you want to output multiple formats. Currently, only ".tex" and ".pdf" are supported. If you specify a ".pdf" extension, you must have a TeX distribution installed (e.g., TeX Live or MiKTeX). If you don't have one installed, consider running tinytex::install_tinytex() in R, which installs a relatively lightweight (~250MB) TeX distribution.
 #' @param colname_stat Set to NA to remove the column. By default, "stat.", or if number of statistics is 1 it is NA.
@@ -98,7 +98,8 @@ mcp_to_table <- function(l, aggregators) {
 #' @importFrom xtable xtable
 #' @importFrom tinytex tinytex_root
 #' @export
-#' @details If a .pdf is specified in output_file, if the compilation fails an error is not given.
+#' @details Return is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
+#' mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
 mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
                      # Default to FALSE for now, since allows LaTeX in column names.
                      #

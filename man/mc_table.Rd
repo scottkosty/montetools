@@ -2,8 +2,7 @@
 % Please edit documentation in R/table.R
 \name{mc_table}
 \alias{mc_table}
-\title{Document feature that it supports *partial* tables (e.g., if not all sims
-done for all nobs or for all params).}
+\title{Output an MC to a .tex or .pdf table.}
 \usage{
 mc_table(
   diags_or_mc,
@@ -40,9 +39,9 @@ mc_table(
 \item{verbose}{An integer (default of 1) to control the level feedback. Set to 0 to turn off messages that are not warnings or errors. At value 1, basic progress information is printed; at values 2 and higher, increasingly more messages are printed that are useful when debugging an unexpected result.}
 }
 \description{
-Document feature that it supports *partial* tables (e.g., if not all sims
-done for all nobs or for all params).
+Output an MC to a .tex or .pdf table.
 }
 \details{
-If a .pdf is specified in output_file, if the compilation fails an error is not given.
+Return is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
+mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
 }
