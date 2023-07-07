@@ -93,6 +93,7 @@ mcp_to_table <- function(l, aggregators) {
 #' @param aggregators What function should be used to summarize the diagnostics of each simulation (typically the default "mean").
 #' @param display_nsims Can be "auto", "none", "row", or "multicol".
 #' @param rounder The rounder to be used.
+#' @param format The format to output. One of "data.frame", "latex", or "pdf".
 #' @eval param_verbose()
 #' @importFrom plyr rbind.fill
 #' @importFrom xtable xtable
@@ -100,7 +101,7 @@ mcp_to_table <- function(l, aggregators) {
 #' @export
 #' @details Return is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
 #' mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
-mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
+mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
                      # Default to FALSE for now, since allows LaTeX in column names.
                      #
                      # A default to TRUE might be more user-friendly.
@@ -116,6 +117,10 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
                      rounder = gen_rounder_fixed(digits = 3),
                      verbose = 1
                      ) {
+
+  # "format" seems a bit clearer to the user. "output" might make it seem like they need
+  # to save it to a file.
+  output_format <- format
 
   # this chunk should be near the top, so that, e.g., nsims_vec below is valid.
   mcdiags <- resolve_diags_or_mc_arg(diags_or_mc = diags_or_mc)
@@ -309,18 +314,51 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
   # smoothly with knitr
   # TODO: need to make "mc_table" class and print.mc_table method.
 
-  na_idx <- which(is.na(output_file))
-  tex_idx <- grep("\\.tex$", output_file)
-  pdf_idx <- grep("\\.pdf$", output_file)
-  png_idx <- grep("\\.png$", output_file)
-  if (length(tex_idx) + length(pdf_idx) + length(png_idx) + length(na_idx) != length(output_file)) {
-    stop("For the 'output_file' argument, we currently only support .tex and .pdf extensions, and 'NA' to return the code. Please open a feature request for other extensions.")
+  if (is.na(format)) {
+    if (is.na(output_file)) {
+      # for now, preserve current default.
+      # TODO: this will be changed (to "data.frame").
+      output_format <- "latex"
+    } else {
+      # guess the file extension from "output_file" argument.
+
+      na_idx <- which(is.na(output_file))
+      tex_idx <- grep("\\.tex$", output_file)
+      pdf_idx <- grep("\\.pdf$", output_file)
+      png_idx <- grep("\\.png$", output_file)
+      if (length(tex_idx) + length(pdf_idx) + length(png_idx) + length(na_idx) != length(output_file)) {
+        stop("For the 'output_file' argument, we currently only support .tex and .pdf extensions, and 'NA' to return the code. Please open a feature request for other extensions.")
+      }
+
+      if (length(tex_idx) > 1 || length(pdf_idx) > 1 || length(png_idx) > 1) {
+        stop("Currently we don't support multiple outputs of same format. Please open a feature request with details of your use case.")
+      }
+
+
+      if (length(pdf_idx) == 1) {
+        output_format <- "pdf"
+      } else if (length(tex_idx) == 1) {
+        output_format <- "latex"
+      } else if (length(png_idx) == 1) {
+        output_format <- "png"
+      }
+    }
   }
 
-  if (length(tex_idx) > 1 || length(pdf_idx) > 1 || length(png_idx) > 1) {
-    stop("Currently we don't support multiple outputs of same format. Please open a feature request with details of your use case.")
+  if (output_format == "data.frame") {
+    if (is.na(output_file)) {
+      return(scarf)
+    } else {
+      saveRDS(scarf, file = output_file)
+    }
   }
 
+  # TODO: just support one argument to "output_file"?
+  #        Or do an outer loop if more than one arg... but core code should assume one arg.
+  # I guess the arg to do multiple is, e.g., .pdf and .png. That way only one LaTeX compilation.
+
+
+  # TODO: The below is mostly LaTeX specific. Refactor to a different function?
 
 
   hlines <- c(-1, -1, 0, nrow(scarf), nrow(scarf))
@@ -432,15 +470,18 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
 
   table_lines_final <- table_lines3
 
-  if (length(tex_idx) == 1) {
-    writeLines(table_lines_final, output_file[[tex_idx]])
-  }
-
-  # TODO: clean up this code.. should be something like <<if (ext == "pdf")>>
-
   # TODO: "png" is work in progress. I haven't documented it yet. Need to find
   #       a way to crop PDF (use pdfcrop?) and to convert to png.
-  if (length(pdf_idx) == 1) {
+
+  if (output_format == "latex") {
+    if (is.na(output_file)) {
+      return(table_lines_final)
+    } else {
+      writeLines(table_lines_final, output_file)
+    }
+  }
+
+  if (output_format == "pdf") {
     if (tinytex_root() == "") {
       stop("'tinytex' (the R package that handles LaTeX compilation) could not find a LaTeX installation. You can ask 'tinytex' to install one by running tinytex::install_tinytex() in R, but note that this will take (1) a few minutes and (2) a considerable amount of space (~250MB).")
     }
@@ -462,9 +503,6 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
     try_tex_compile(tex_f = tex_standalone_f, pdf_file = pdf_file, verbose = verbose)
   }
 
-  if (length(na_idx) == 1) {
-    return(table_lines_final)
-  }
 }
 
 
