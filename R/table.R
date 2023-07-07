@@ -98,6 +98,7 @@ mcp_to_table <- function(l, aggregators) {
 #' @importFrom plyr rbind.fill
 #' @importFrom xtable xtable
 #' @importFrom tinytex tinytex_root
+#' @importFrom tools file_ext
 #' @export
 #' @details Return is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
 #' mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
@@ -330,25 +331,16 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
     } else {
       # guess the file extension from "output_file" argument.
 
-      na_idx <- which(is.na(output_file))
-      tex_idx <- grep("\\.tex$", output_file)
-      pdf_idx <- grep("\\.pdf$", output_file)
-      png_idx <- grep("\\.png$", output_file)
-      if (length(tex_idx) + length(pdf_idx) + length(png_idx) + length(na_idx) != length(output_file)) {
-        stop("For the 'output_file' argument, we currently only support .tex and .pdf extensions, and 'NA' to return the code. Please open a feature request for other extensions.")
-      }
+      ext <- file_ext(output_file)
 
-      if (length(tex_idx) > 1 || length(pdf_idx) > 1 || length(png_idx) > 1) {
-        stop("Currently we don't support multiple outputs of same format. Please open a feature request with details of your use case.")
-      }
-
-
-      if (length(pdf_idx) == 1) {
+      if (ext == "pdf") {
         output_format <- "pdf"
-      } else if (length(tex_idx) == 1) {
+      } else if (ext == "tex") {
         output_format <- "latex"
-      } else if (length(png_idx) == 1) {
+      } else if (ext == "png") {
         output_format <- "png"
+      } else {
+        stop("Unless you specify 'format', for the 'output_file' argument, we currently only support .tex and .pdf extensions, or 'NA' to return the code. Please open a feature request for other extensions/formats.")
       }
     }
   }
@@ -361,9 +353,11 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
     }
   }
 
-  # TODO: just support one argument to "output_file"?
-  #        Or do an outer loop if more than one arg... but core code should assume one arg.
-  # I guess the arg to do multiple is, e.g., .pdf and .png. That way only one LaTeX compilation.
+  if (output_format %in% c("pdf")) {
+    if (is.na(output_file)) {
+      stop("If 'format' is '", output_format, "', 'output_file' cannot be NA")
+    }
+  }
 
 
   # TODO: The below is mostly LaTeX specific. Refactor to a different function?
@@ -506,7 +500,7 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
       message("intermediate TeX file location: ", tex_standalone_f)
     }
     writeLines(tex_standalone, con = tex_standalone_f)
-    pdf_file <- output_file[[pdf_idx]]
+    pdf_file <- output_file
     if (verbose >= 2) message("output PDF file (future) location: ", pdf_file)
     try_tex_compile(tex_f = tex_standalone_f, pdf_file = pdf_file, verbose = verbose)
   }
