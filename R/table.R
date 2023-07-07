@@ -314,6 +314,13 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
   # smoothly with knitr
   # TODO: need to make "mc_table" class and print.mc_table method.
 
+  if (length(output_file) != 1) {
+    stop("'output_file' should have length 1")
+  }
+  if (length(output_format) != 1) {
+    stop("'format' should have length 1")
+  }
+
   if (is.na(format)) {
     if (is.na(output_file)) {
       # assume a plain data.frame as output. The old default was "latex", but

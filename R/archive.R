@@ -125,6 +125,7 @@ mc_archive_store <- function(mc, snapshot_dir) {
   #
   # We do not attempt to compile if no 'diagnostics' argument.
   if (!is.null(attr(mc, "diagnostics"))) {
-    mc_table(diags_or_mc = mc, output_file = file.path(snapshot_dir, c("table.tex", "table.pdf")))
+    mc_table(diags_or_mc = mc, output_file = file.path(snapshot_dir, "table.tex"))
+    mc_table(diags_or_mc = mc, output_file = file.path(snapshot_dir, "table.pdf"))
   }
 }
