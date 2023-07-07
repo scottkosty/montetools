@@ -55,7 +55,7 @@ for (si in seed_inits_l) {
                verbose = 0
       )
       diags_ <- mc_diags(mc, diagnostics = diagnostic_)
-      expect_error(table_ <- mc_table(diags_), NA)
+      expect_error(table_ <- mc_table(diags_, format = "latex"), NA)
       # For updating hardcopy tests, pipe to 'xsel -b' with following command:
       # system2("xsel", args = "-b", input = capture.output(make_expectation(table_)))
       if (si == "seed_init_add_ints") {

@@ -93,7 +93,7 @@ mcp_to_table <- function(l, aggregators) {
 #' @param aggregators What function should be used to summarize the diagnostics of each simulation (typically the default "mean").
 #' @param display_nsims Can be "auto", "none", "row", or "multicol".
 #' @param rounder The rounder to be used.
-#' @param format The format to output. One of "data.frame", "latex", or "pdf".
+#' @param format The format to output. One of "data.frame", "latex", or "pdf". The default is to guess the format from the extension of "output_file". If "output_file" is NA, then the default is "data.frame".
 #' @eval param_verbose()
 #' @importFrom plyr rbind.fill
 #' @importFrom xtable xtable
@@ -316,9 +316,10 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
 
   if (is.na(format)) {
     if (is.na(output_file)) {
-      # for now, preserve current default.
-      # TODO: this will be changed (to "data.frame").
-      output_format <- "latex"
+      # assume a plain data.frame as output. The old default was "latex", but
+      # that is not too friendly to users who do not use LaTeX. Also,
+      # even for LaTeX users it is easier to read the "data.frame" output.
+      output_format <- "data.frame"
     } else {
       # guess the file extension from "output_file" argument.
 

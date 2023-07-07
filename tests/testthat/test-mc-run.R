@@ -205,8 +205,8 @@ expect_equal(statms, list(structure(1.45616309749746, .Dim = c(1L,
 
   if (run_hc_tests) {
     # For updating hardcopy tests, pipe to 'xsel -b' with following command:
-    # system2("xsel", args = "-b", input = capture.output(make_expectation(mc_table(diags_))))
-expect_equal(mc_table(diags_), c("\\begin{tabular}{lll}", "  \\hline", 
+    # system2("xsel", args = "-b", input = capture.output(make_expectation(mc_table(diags_, format = "latex"))))
+expect_equal(mc_table(diags_, format = "latex"), c("\\begin{tabular}{lll}", "  \\hline", 
 "\\hline", "\\multicolumn{1}{l}{} & \\multicolumn{2}{c}{$n$} \\\\", 
 "param. & 5 & 9 \\\\ ", "  \\hline", "1 & 2.456 & 1.483 \\\\ ", 
 "  2 & 1.263 & 1.890 \\\\ ", "  3 & 3.244 & 2.957 \\\\ ", "\\hline", 

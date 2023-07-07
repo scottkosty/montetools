@@ -23,7 +23,7 @@ mc_table(
 
 \item{output_file}{A vector of file names to output. Leave as NA (default) to print to the screen (useful when using knitr). The vector may have length greater than 1 if you want to output multiple formats. Currently, only ".tex" and ".pdf" are supported. If you specify a ".pdf" extension, you must have a TeX distribution installed (e.g., TeX Live or MiKTeX). If you don't have one installed, consider running tinytex::install_tinytex() in R, which installs a relatively lightweight (~250MB) TeX distribution.}
 
-\item{format}{The format to output. One of "data.frame", "latex", or "pdf".}
+\item{format}{The format to output. One of "data.frame", "latex", or "pdf". The default is to guess the format from the extension of "output_file". If "output_file" is NA, then the default is "data.frame".}
 
 \item{aggregators}{What function should be used to summarize the diagnostics of each simulation (typically the default "mean").}
 
