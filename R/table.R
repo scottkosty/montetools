@@ -305,6 +305,23 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
   }
   scarf <- scarf2
 
+  # TODO: look at how xtable and print.xtable() work. Make sure this works
+  # smoothly with knitr
+  # TODO: need to make "mc_table" class and print.mc_table method.
+
+  na_idx <- which(is.na(output_file))
+  tex_idx <- grep("\\.tex$", output_file)
+  pdf_idx <- grep("\\.pdf$", output_file)
+  png_idx <- grep("\\.png$", output_file)
+  if (length(tex_idx) + length(pdf_idx) + length(png_idx) + length(na_idx) != length(output_file)) {
+    stop("For the 'output_file' argument, we currently only support .tex and .pdf extensions, and 'NA' to return the code. Please open a feature request for other extensions.")
+  }
+
+  if (length(tex_idx) > 1 || length(pdf_idx) > 1 || length(png_idx) > 1) {
+    stop("Currently we don't support multiple outputs of same format. Please open a feature request with details of your use case.")
+  }
+
+
 
   hlines <- c(-1, -1, 0, nrow(scarf), nrow(scarf))
 
@@ -414,22 +431,6 @@ mc_table <- function(diags_or_mc, output_file = NA, aggregators, colname_poi = "
   }
 
   table_lines_final <- table_lines3
-
-  # TODO: look at how xtable and print.xtable() work. Make sure this works
-  # smoothly with knitr
-  # TODO: need to make "mc_table" class and print.mc_table method.
-
-  na_idx <- which(is.na(output_file))
-  tex_idx <- grep("\\.tex$", output_file)
-  pdf_idx <- grep("\\.pdf$", output_file)
-  png_idx <- grep("\\.png$", output_file)
-  if (length(tex_idx) + length(pdf_idx) + length(png_idx) + length(na_idx) != length(output_file)) {
-    stop("For the 'output_file' argument, we currently only support .tex and .pdf extensions, and 'NA' to return the code. Please open a feature request for other extensions.")
-  }
-
-  if (length(tex_idx) > 1 || length(pdf_idx) > 1 || length(png_idx) > 1) {
-    stop("Currently we don't support multiple outputs of same format. Please open a feature request with details of your use case.")
-  }
 
   if (length(tex_idx) == 1) {
     writeLines(table_lines_final, output_file[[tex_idx]])
