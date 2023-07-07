@@ -503,6 +503,7 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
     pdf_file <- output_file
     if (verbose >= 2) message("output PDF file (future) location: ", pdf_file)
     try_tex_compile(tex_f = tex_standalone_f, pdf_file = pdf_file, verbose = verbose)
+    return(invisible(NULL))
   }
 
 }
