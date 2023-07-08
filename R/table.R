@@ -100,7 +100,7 @@ mcp_to_table <- function(l, aggregators) {
 #' @importFrom tinytex tinytex_root
 #' @importFrom tools file_ext
 #' @export
-#' @details Return is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
+#' @details Return of "latex" format is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
 #' mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
 mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
                      # Default to FALSE for now, since allows LaTeX in column names.
