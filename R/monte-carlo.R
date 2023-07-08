@@ -1213,11 +1213,19 @@ do_mc_pair <- function(n, one_nsims, diagnostics, dgp, stat_knowledge, statistic
 
 #' @export
 print.montecarlo <- function(x, ...) {
-  param_tups <- get_param_tuples(x)
-  for (pn in get_pn_pairs(x)) {
-    cat(pn_to_label_str(mcx = x, pn_pair = pn), "\n")
-    print(mc_stats_m(x, pn))
-    cat("\n")
+  if (!is.null(attr(x, "diagnostics"))) {
+    print(mc_table(x), row.names = FALSE)
+  } else {
+    # TODO: maybe try to guess a diagnostic? The following is pretty useless
+    #       if there is a non-trivial amount of sims.
+    #       Maybe condition behavior or nsims? e.g., if nsims < 10, just print
+    #       everything out? And provide arguments accordingly.
+    param_tups <- get_param_tuples(x)
+    for (pn in get_pn_pairs(x)) {
+      cat(pn_to_label_str(mcx = x, pn_pair = pn), "\n")
+      print(mc_stats_m(x, pn))
+      cat("\n")
+    }
   }
 }
 

@@ -765,7 +765,7 @@ resolve_diags_or_mc_arg <- function(diags_or_mc, verbose = 1) {
     # nothing to do
   } else if (inherits(diags_or_mc, "montecarlo")) {
     if (is.null(attr(diags_or_mc, "diagnostics"))) {
-      stop("You must give the argument 'diagnostics' to mc_run().")
+      stop("You must give the argument 'diagnostics' to mc_run(), or use mc_diags() on the return of mc_run().")
     } else {
       diags_result <- mc_diags(diags_or_mc)
     }
