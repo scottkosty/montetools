@@ -442,14 +442,16 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
       msg <- glue("The following packages are required for the table format \"{output_format}\" and are not installed: {missing_packs_qcs}. They can be installed with the following command: install.packages(c({missing_packs_qcs}))")
       stop(msg)
     }
-    else {
-      requireNamespace("gt", quietly = TRUE)
-      gt_ <- gt::gt(scarf)
-      gt::gtsave(data = gt_, filename = output_file)
-      return(invisible(NULL))
-    }
   }
 
+  if (engine == "gt") {
+    requireNamespace("gt", quietly = TRUE)
+    gt_ <- gt::gt(scarf)
+    # TODO: gtsave() returns an (invisible) bool for whether successful.
+    #       should mc_table() do the same?
+    gt::gtsave(data = gt_, filename = output_file)
+    return(invisible(NULL))
+  }
 
   # TODO: The below is mostly LaTeX specific. Refactor to a different function?
 
