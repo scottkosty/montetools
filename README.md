@@ -46,7 +46,8 @@ Please make feature requests! Here is a list of current features:
     * Suppose referee number 2 wants to see the L1 distance as a measure of distance from your estimator to the parameter instead of the L2 distance. You do not need to rerun your simulations.
 1. Adding an additional parameter, or an additional sample size, does not change existing results.
     * The results of one chunk (i.e., combination of sample size and data generating process parameter) are invariant to the other sample sizes and parameters included in the table. Thus, numerical reproducibility is preserved. This way, you do not need to rerun all simulations from scratch for them to be numerically reproducible.
-1.  * Extensible hook system. montetools was created with extensibility in mind. In fact, features such as in-progress results, backups, and extending and reproducing MCs were all implemented using the hook mechanism. That is, a user could have written these features without modifying the core code of montetools.
+1. Extensible hook system.
+    * montetools was created with extensibility in mind. In fact, features such as in-progress results, backups, and extending and reproducing MCs were all implemented using the hook mechanism. That is, a user could have written these features without modifying the core code of montetools.
 
 A general feature of montetools is preserving reproducibility. You can enhance an initial MC in various ways, adding additional simulations, parameters, and sample sizes, and the result is an MC, which you can again enhance. That is, to achieve reproducibility you do not need to rerun your initial simulations.
 
