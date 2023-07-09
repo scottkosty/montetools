@@ -267,6 +267,8 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
 
   # END OF CHECKS.
 
+  is_latex_format <- (engine == "montetools" && output_format %in% c("tex", "pdf")) ||
+                     (engine == "gt" && output_format %in% c("tex"))
 
   # TODO: use a get method to create abstract interface?
   # shouldn't matter which aggregator, but generalize (by using it here) just in case.
@@ -406,13 +408,13 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
   #
   # todo: In a quick test, this actually didn't make a difference in many
   #       situations. Document in which case it does make a difference.
-  # Replace "10000" with "10{,}000" or 10,000 depending on "escape".
+  # Replace "10000" with "10{,}000" or 10,000 depending on if LaTeX is used.
   # We could alternatively do this substitution after the call to xtable,
   # and thus always use {,}.
-  if (escape) {
-    big_mark_ <- ","
-  } else {
+  if (is_latex_format) {
     big_mark_ <- "{,}"
+  } else {
+    big_mark_ <- ","
   }
   #
   nobs_orig <- colnames(scarf)[nobs_idx]
