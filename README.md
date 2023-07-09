@@ -200,7 +200,24 @@ Now we put everything together and finally call `mc_run()`.
 
 ## What to do after the run?
 
-The first thing we should do is to save the `mc` object we created as an Rds file.
+We can view the results by just printing the `mc` object, as follows:
+
+    > mc
+       param. diag. (mean)  stat.     10     50    100    500
+       N(2,1)         bias   mean  0.005 -0.006  0.003 -0.000
+                           median  0.011 -0.005  0.005 -0.001
+                       MSE   mean  0.103  0.021  0.010  0.002
+                           median  0.141  0.033  0.016  0.003
+       N(5,1)         bias   mean  0.005 -0.001  0.003  0.002
+                           median  0.001 -0.006  0.007  0.003
+                       MSE   mean  0.104  0.017  0.010  0.002
+                           median  0.145  0.026  0.017  0.003
+     N(5,100)         bias   mean  0.022  0.053 -0.037  0.008
+                           median  0.135  0.044 -0.058  0.001
+                       MSE   mean 10.237  1.950  0.999  0.191
+                           median 13.798  2.881  1.475  0.313
+
+One of the first things we should do is to save the `mc` object we created as an Rds file.
 
     # The resulting file is 740K, and it has the observed values of
     # statistics() for every simulation.
