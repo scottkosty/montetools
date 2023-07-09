@@ -155,6 +155,15 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
     stop("We currently only support one aggregator at a time.")
   }
 
+  nsims_vec <- get_nsims_vec(mcdiags)
+  if (display_nsims == "auto") {
+    if (length(unique(nsims_vec)) > 1) {
+      display_nsims <- "row"
+    } else {
+      display_nsims <- "multicol"
+    }
+  }
+
   if (length(output_file) != 1) {
     stop("'output_file' should have length 1")
   }
@@ -197,14 +206,66 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
   }
 
 
-  nsims_vec <- get_nsims_vec(mcdiags)
-  if (display_nsims == "auto") {
-    if (length(unique(nsims_vec)) > 1) {
-      display_nsims <- "row"
+  if (is.na(engine)) {
+    if (output_format %in% get_montetools_formats()) {
+      engine <- "montetools"
+    } else if (output_format %in% get_gt_formats()) {
+      engine <- "gt"
     } else {
-      display_nsims <- "multicol"
+      # This should have been caught above when checking formats.
+      stop("Error with setting engine for formats. This is a bug. Please post example.")
+    }
+  } else {
+    if (engine == "montetools") {
+      if (!output_format %in% get_montetools_formats()) {
+        stop("Format not supported by engine.")
+      }
+    } else if (engine == "gt") {
+      if (!output_format %in% get_gt_formats()) {
+        stop("Format not supported by engine.")
+      }
+    } else {
+      stop("The only supported engines are 'montetools' and 'gt'.")
     }
   }
+
+  if (engine == "gt") {
+    # "montetools" tries to detect missing packages and give an error, rather
+    # than relying on the errors of the engines, for two reasons:
+    # 1. e.g., the "gt" error is informative, but the montetools user might be confused
+    #    about what a "gt table", and also the install.packages() command isn't given:
+    #
+    #    > mc_table(mc, output_file = "table.docx")
+    #    Error in gt_save_docx(data = data, filename, path, ...) : 
+    #      {rmarkdown} package is necessary to save gt tables as word documents.
+    # 2. "montetools" wants to give a single error for all missing packages, so that
+    #    they can be installed all together, i.e., with one install.packages() call.
+
+    # dependencies for this particular format and engine combo.
+    dep_packs <- "gt"
+    if (output_format == "docx") {
+      dep_packs <- c(dep_packs, "rmarkdown")
+    } else if (output_format %in% c("png", "pdf")) {
+      dep_packs <- c(dep_packs, "webshot2")
+    }
+
+    missing_packs <- dep_packs[!(dep_packs %in% rownames(installed.packages()))]
+
+    if (length(missing_packs) == 1) {
+      # singular
+      msg <- glue("The `{missing_packs}` package is required for the table format {output_format} and is not installed. It can be installed with the following command: `install.packages(\"{missing_packs}\")")
+      stop(msg)
+    } else if (length(missing_packs) > 1) {
+      # plural
+      # qcs = "quoted and comma-separated"
+      missing_packs_q <- paste0("\"", missing_packs, "\"")
+      missing_packs_qcs <- paste(missing_packs_q, collapse = ", ")
+      msg <- glue("The following packages are required for the table format \"{output_format}\" and are not installed: {missing_packs_qcs}. They can be installed with the following command: install.packages(c({missing_packs_qcs}))")
+      stop(msg)
+    }
+  }
+
+  # END OF CHECKS.
 
 
   # TODO: use a get method to create abstract interface?
@@ -385,64 +446,6 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
     }
   }
 
-  if (is.na(engine)) {
-    if (output_format %in% get_montetools_formats()) {
-      engine <- "montetools"
-    } else if (output_format %in% get_gt_formats()) {
-      engine <- "gt"
-    } else {
-      # This should have been caught above when checking formats.
-      stop("Error with setting engine for formats. This is a bug. Please post example.")
-    }
-  } else {
-    if (engine == "montetools") {
-      if (!output_format %in% get_montetools_formats()) {
-        stop("Format not supported by engine.")
-      }
-    } else if (engine == "gt") {
-      if (!output_format %in% get_gt_formats()) {
-        stop("Format not supported by engine.")
-      }
-    } else {
-      stop("The only supported engines are 'montetools' and 'gt'.")
-    }
-  }
-
-  if (engine == "gt") {
-    # "montetools" tries to detect missing packages and give an error, rather
-    # than relying on the errors of the engines, for two reasons:
-    # 1. e.g., the "gt" error is informative, but the montetools user might be confused
-    #    about what a "gt table", and also the install.packages() command isn't given:
-    #
-    #    > mc_table(mc, output_file = "table.docx")
-    #    Error in gt_save_docx(data = data, filename, path, ...) : 
-    #      {rmarkdown} package is necessary to save gt tables as word documents.
-    # 2. "montetools" wants to give a single error for all missing packages, so that
-    #    they can be installed all together, i.e., with one install.packages() call.
-
-    # dependencies for this particular format and engine combo.
-    dep_packs <- "gt"
-    if (output_format == "docx") {
-      dep_packs <- c(dep_packs, "rmarkdown")
-    } else if (output_format %in% c("png", "pdf")) {
-      dep_packs <- c(dep_packs, "webshot2")
-    }
-
-    missing_packs <- dep_packs[!(dep_packs %in% rownames(installed.packages()))]
-
-    if (length(missing_packs) == 1) {
-      # singular
-      msg <- glue("The `{missing_packs}` package is required for the table format {output_format} and is not installed. It can be installed with the following command: `install.packages(\"{missing_packs}\")")
-      stop(msg)
-    } else if (length(missing_packs) > 1) {
-      # plural
-      # qcs = "quoted and comma-separated"
-      missing_packs_q <- paste0("\"", missing_packs, "\"")
-      missing_packs_qcs <- paste(missing_packs_q, collapse = ", ")
-      msg <- glue("The following packages are required for the table format \"{output_format}\" and are not installed: {missing_packs_qcs}. They can be installed with the following command: install.packages(c({missing_packs_qcs}))")
-      stop(msg)
-    }
-  }
 
   if (engine == "gt") {
     requireNamespace("gt", quietly = TRUE)
