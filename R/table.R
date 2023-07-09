@@ -155,6 +155,48 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
     stop("We currently only support one aggregator at a time.")
   }
 
+  if (length(output_file) != 1) {
+    stop("'output_file' should have length 1")
+  }
+  if (length(output_format) != 1) {
+    stop("'format' should have length 1")
+  }
+
+  supported_formats <- c(get_montetools_formats(), get_gt_formats())
+  supported_exts <- supported_formats
+
+  if (is.na(output_format)) {
+    if (is.na(output_file)) {
+      # assume a plain data.frame as output. The old default was "latex", but
+      # that is not too friendly to users who do not use LaTeX. Also,
+      # even for LaTeX users it is easier to read the "data.frame" output.
+      output_format <- "data.frame"
+    } else {
+      # guess the file extension from "output_file" argument.
+
+      ext <- file_ext(output_file)
+      if (!(ext %in% supported_exts)) {
+        stop("'montetools' currently only supports the following extensions: ",
+             paste(supported_exts, collapse = ", "),
+             ". Please open a feature request for other extensions/formats.")
+      }
+      output_format <- ext
+    }
+  }
+
+  if (!(output_format %in% supported_formats)) {
+    stop("'montetools' currently only supports the following formats: ",
+         paste(supported_formats, collapse = ", "),
+         ". Please open a feature request for other formats.")
+  }
+
+  if (!(output_format %in% c("tex", "data.frame"))) {
+    if (is.na(output_file)) {
+      stop("If 'format' is '", output_format, "', 'output_file' cannot be NA")
+    }
+  }
+
+
   nsims_vec <- get_nsims_vec(mcdiags)
   if (display_nsims == "auto") {
     if (length(unique(nsims_vec)) > 1) {
@@ -334,47 +376,6 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
   # TODO: look at how xtable and print.xtable() work. Make sure this works
   # smoothly with knitr
   # TODO: need to make "mc_table" class and print.mc_table method.
-
-  if (length(output_file) != 1) {
-    stop("'output_file' should have length 1")
-  }
-  if (length(output_format) != 1) {
-    stop("'format' should have length 1")
-  }
-
-  supported_formats <- c(get_montetools_formats(), get_gt_formats())
-  supported_exts <- supported_formats
-
-  if (is.na(output_format)) {
-    if (is.na(output_file)) {
-      # assume a plain data.frame as output. The old default was "latex", but
-      # that is not too friendly to users who do not use LaTeX. Also,
-      # even for LaTeX users it is easier to read the "data.frame" output.
-      output_format <- "data.frame"
-    } else {
-      # guess the file extension from "output_file" argument.
-
-      ext <- file_ext(output_file)
-      if (!(ext %in% supported_exts)) {
-        stop("'montetools' currently only supports the following extensions: ",
-             paste(supported_exts, collapse = ", "),
-             ". Please open a feature request for other extensions/formats.")
-      }
-      output_format <- ext
-    }
-  }
-
-  if (!(output_format %in% supported_formats)) {
-    stop("'montetools' currently only supports the following formats: ",
-         paste(supported_formats, collapse = ", "),
-         ". Please open a feature request for other formats.")
-  }
-
-  if (!(output_format %in% c("tex", "data.frame"))) {
-    if (is.na(output_file)) {
-      stop("If 'format' is '", output_format, "', 'output_file' cannot be NA")
-    }
-  }
 
   if (output_format == "data.frame") {
     if (is.na(output_file)) {
