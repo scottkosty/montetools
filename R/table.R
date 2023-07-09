@@ -118,6 +118,7 @@ param_engine <- function() {
 #' @importFrom xtable xtable
 #' @importFrom tinytex tinytex_root
 #' @importFrom tools file_ext
+#' @importFrom utils installed.packages
 #' @export
 #' @details Return of "tex" format is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
 #' mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
@@ -406,12 +407,42 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
     }
   }
 
-
   if (engine == "gt") {
-    if (!requireNamespace("gt", quietly = TRUE)) {
-      stop("The `gt` package is required for this format.",
-           " It can be installed with `install.packages(\"gt\")`.")
-    } else {
+    # "montetools" tries to detect missing packages and give an error, rather
+    # than relying on the errors of the engines, for two reasons:
+    # 1. e.g., the "gt" error is informative, but the montetools user might be confused
+    #    about what a "gt table", and also the install.packages() command isn't given:
+    #
+    #    > mc_table(mc, output_file = "table.docx")
+    #    Error in gt_save_docx(data = data, filename, path, ...) : 
+    #      {rmarkdown} package is necessary to save gt tables as word documents.
+    # 2. "montetools" wants to give a single error for all missing packages, so that
+    #    they can be installed all together, i.e., with one install.packages() call.
+
+    # dependencies for this particular format and engine combo.
+    dep_packs <- "gt"
+    if (output_format == "docx") {
+      dep_packs <- c(dep_packs, "rmarkdown")
+    } else if (output_format %in% c("png", "pdf")) {
+      dep_packs <- c(dep_packs, "webshot2")
+    }
+
+    missing_packs <- dep_packs[!(dep_packs %in% rownames(installed.packages()))]
+
+    if (length(missing_packs) == 1) {
+      # singular
+      msg <- glue("The `{missing_packs}` package is required for the table format {output_format} and is not installed. It can be installed with the following command: `install.packages(\"{missing_packs}\")")
+      stop(msg)
+    } else if (length(missing_packs) > 1) {
+      # plural
+      # qcs = "quoted and comma-separated"
+      missing_packs_q <- paste0("\"", missing_packs, "\"")
+      missing_packs_qcs <- paste(missing_packs_q, collapse = ", ")
+      msg <- glue("The following packages are required for the table format \"{output_format}\" and are not installed: {missing_packs_qcs}. They can be installed with the following command: install.packages(c({missing_packs_qcs}))")
+      stop(msg)
+    }
+    else {
+      requireNamespace("gt", quietly = TRUE)
       gt_ <- gt::gt(scarf)
       gt::gtsave(data = gt_, filename = output_file)
       return(invisible(NULL))
