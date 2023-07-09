@@ -77,6 +77,24 @@ mcp_to_table <- function(l, aggregators) {
   return(p_df)
 }
 
+get_gt_formats <- function() {
+  # The list of available formats that gt can handle can be seen here:
+  # ?gt::gtsave
+  # Look in the "Description" and also in the param "filename".
+  c("rtf", "docx", "tex", "html", "pdf", "png")
+}
+
+get_montetools_formats <- function() {
+  c("data.frame", "tex", "pdf")
+}
+
+param_engine <- function() {
+  # cs = comma-separated
+  gt_cs <- paste(get_gt_formats(), collapse = ", ")
+  mt_cs <- paste(get_montetools_formats(), collapse = ", ")
+  glue('@param engine  The engine used to generate the output. Currently supported engines are "montetools" and "gt". Engine "montetools" supports formats {mt_cs}. "gt" supports formats {gt_cs}')
+}
+
 # TODO: when using knitr, does user need to wrap in
 #   paste(abc, collapse = "\n")
 # or does it work as is?
@@ -93,16 +111,17 @@ mcp_to_table <- function(l, aggregators) {
 #' @param aggregators What function should be used to summarize the diagnostics of each simulation (typically the default "mean").
 #' @param display_nsims Can be "auto", "none", "row", or "multicol".
 #' @param rounder The rounder to be used.
-#' @param format The format to output. One of "data.frame", "latex", or "pdf". The default is to guess the format from the extension of "output_file". If "output_file" is NA, then the default is "data.frame".
+#' @param format The format to output. One of "data.frame", "tex", or "pdf". The default is to guess the format from the extension of "output_file". If "output_file" is NA, then the default is "data.frame".
+#' @eval param_engine()
 #' @eval param_verbose()
 #' @importFrom plyr rbind.fill
 #' @importFrom xtable xtable
 #' @importFrom tinytex tinytex_root
 #' @importFrom tools file_ext
 #' @export
-#' @details Return of "latex" format is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
+#' @details Return of "tex" format is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
 #' mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
-mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
+mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
                      # Default to FALSE for now, since allows LaTeX in column names.
                      #
                      # A default to TRUE might be more user-friendly.
@@ -322,7 +341,10 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
     stop("'format' should have length 1")
   }
 
-  if (is.na(format)) {
+  supported_formats <- c(get_montetools_formats(), get_gt_formats())
+  supported_exts <- supported_formats
+
+  if (is.na(output_format)) {
     if (is.na(output_file)) {
       # assume a plain data.frame as output. The old default was "latex", but
       # that is not too friendly to users who do not use LaTeX. Also,
@@ -332,16 +354,24 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
       # guess the file extension from "output_file" argument.
 
       ext <- file_ext(output_file)
-
-      if (ext == "pdf") {
-        output_format <- "pdf"
-      } else if (ext == "tex") {
-        output_format <- "latex"
-      } else if (ext == "png") {
-        output_format <- "png"
-      } else {
-        stop("Unless you specify 'format', for the 'output_file' argument, we currently only support .tex and .pdf extensions, or 'NA' to return the code. Please open a feature request for other extensions/formats.")
+      if (!(ext %in% supported_exts)) {
+        stop("'montetools' currently only supports the following extensions: ",
+             paste(supported_exts, collapse = ", "),
+             ". Please open a feature request for other extensions/formats.")
       }
+      output_format <- ext
+    }
+  }
+
+  if (!(output_format %in% supported_formats)) {
+    stop("'montetools' currently only supports the following formats: ",
+         paste(supported_formats, collapse = ", "),
+         ". Please open a feature request for other formats.")
+  }
+
+  if (!(output_format %in% c("tex", "data.frame"))) {
+    if (is.na(output_file)) {
+      stop("If 'format' is '", output_format, "', 'output_file' cannot be NA")
     }
   }
 
@@ -353,9 +383,38 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
     }
   }
 
-  if (output_format %in% c("pdf")) {
-    if (is.na(output_file)) {
-      stop("If 'format' is '", output_format, "', 'output_file' cannot be NA")
+  if (is.na(engine)) {
+    if (output_format %in% get_montetools_formats()) {
+      engine <- "montetools"
+    } else if (output_format %in% get_gt_formats()) {
+      engine <- "gt"
+    } else {
+      # This should have been caught above when checking formats.
+      stop("Error with setting engine for formats. This is a bug. Please post example.")
+    }
+  } else {
+    if (engine == "montetools") {
+      if (!output_format %in% get_montetools_formats()) {
+        stop("Format not supported by engine.")
+      }
+    } else if (engine == "gt") {
+      if (!output_format %in% get_gt_formats()) {
+        stop("Format not supported by engine.")
+      }
+    } else {
+      stop("The only supported engines are 'montetools' and 'gt'.")
+    }
+  }
+
+
+  if (engine == "gt") {
+    if (!requireNamespace("gt", quietly = TRUE)) {
+      stop("The `gt` package is required for this format.",
+           " It can be installed with `install.packages(\"gt\")`.")
+    } else {
+      gt_ <- gt::gt(scarf)
+      gt::gtsave(data = gt_, filename = output_file)
+      return(invisible(NULL))
     }
   }
 
@@ -475,7 +534,7 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, aggregators, co
   # TODO: "png" is work in progress. I haven't documented it yet. Need to find
   #       a way to crop PDF (use pdfcrop?) and to convert to png.
 
-  if (output_format == "latex") {
+  if (output_format == "tex") {
     if (is.na(output_file)) {
       return(table_lines_final)
     } else {

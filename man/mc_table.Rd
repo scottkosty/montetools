@@ -8,6 +8,7 @@ mc_table(
   diags_or_mc,
   output_file = NA,
   format = NA,
+  engine = NA,
   aggregators,
   colname_poi = "parameter",
   colname_stat,
@@ -23,7 +24,9 @@ mc_table(
 
 \item{output_file}{A vector of file names to output. Leave as NA (default) to print to the screen (useful when using knitr). The vector may have length greater than 1 if you want to output multiple formats. Currently, only ".tex" and ".pdf" are supported. If you specify a ".pdf" extension, you must have a TeX distribution installed (e.g., TeX Live or MiKTeX). If you don't have one installed, consider running tinytex::install_tinytex() in R, which installs a relatively lightweight (~250MB) TeX distribution.}
 
-\item{format}{The format to output. One of "data.frame", "latex", or "pdf". The default is to guess the format from the extension of "output_file". If "output_file" is NA, then the default is "data.frame".}
+\item{format}{The format to output. One of "data.frame", "tex", or "pdf". The default is to guess the format from the extension of "output_file". If "output_file" is NA, then the default is "data.frame".}
+
+\item{engine}{The engine used to generate the output. Currently supported engines are "montetools" and "gt". Engine "montetools" supports formats data.frame, tex, pdf. "gt" supports formats rtf, docx, tex, html, pdf, png}
 
 \item{aggregators}{What function should be used to summarize the diagnostics of each simulation (typically the default "mean").}
 
@@ -45,6 +48,6 @@ mc_table(
 Output an MC to a .tex or .pdf table.
 }
 \details{
-Return of "latex" format is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
+Return of "tex" format is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
 mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
 }
