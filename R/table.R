@@ -92,7 +92,7 @@ param_engine <- function() {
   # cs = comma-separated
   gt_cs <- paste(get_gt_formats(), collapse = ", ")
   mt_cs <- paste(get_montetools_formats(), collapse = ", ")
-  glue('@param engine  The engine used to generate the output. Currently supported engines are "montetools" and "gt". Engine "montetools" supports formats {mt_cs}. "gt" supports formats {gt_cs}')
+  glue('@param engine  The engine used to generate the output. Currently supported engines are "montetools" and "gt". Engine "montetools" supports formats {mt_cs}. "gt" supports formats {gt_cs}.')
 }
 
 # TODO: when using knitr, does user need to wrap in

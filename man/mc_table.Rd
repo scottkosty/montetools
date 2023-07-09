@@ -26,7 +26,7 @@ mc_table(
 
 \item{format}{The format to output. One of "data.frame", "tex", or "pdf". The default is to guess the format from the extension of "output_file". If "output_file" is NA, then the default is "data.frame".}
 
-\item{engine}{The engine used to generate the output. Currently supported engines are "montetools" and "gt". Engine "montetools" supports formats data.frame, tex, pdf. "gt" supports formats rtf, docx, tex, html, pdf, png}
+\item{engine}{The engine used to generate the output. Currently supported engines are "montetools" and "gt". Engine "montetools" supports formats data.frame, tex, pdf. "gt" supports formats rtf, docx, tex, html, pdf, png.}
 
 \item{aggregators}{What function should be used to summarize the diagnostics of each simulation (typically the default "mean").}
 
