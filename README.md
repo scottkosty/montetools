@@ -237,6 +237,11 @@ This results in the following PDF file:
 
 <img src="man/figures/README-table1.svg" width="630"/>
 
+Alternatively, we can output to other formats, such as .docx, thanks to [gt](https://github.com/rstudio/gt):
+
+    mc_table(mc, output_file = "table1.docx")
+
+
 ## Adding diagnostic without rerunning
 
 Referee #1 asks for the results of the mean absolute error (MAE), in addition to what we previously calculated, the MSE. We can address this without rerunning the simulations. The `mc` object has all realized values of `statistics()` so we just need to rerun the diagnostic part, which is very fast.
