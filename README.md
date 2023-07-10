@@ -239,6 +239,8 @@ This results in the following PDF file:
 
 Alternatively, we can output to other formats, such as .docx, thanks to [gt](https://github.com/rstudio/gt):
 
+    # for .docx, you first need to install the packages "gt" and "rmarkdown",
+    # which can be done as follows:   install.packages(c("gt", "rmarkdown"))
     mc_table(mc, output_file = "table1.docx")
 
 
