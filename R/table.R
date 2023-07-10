@@ -78,6 +78,9 @@ mcp_to_table <- function(l, aggregators) {
 }
 
 get_gt_formats <- function() {
+  # TODO: document that some packages are needed for some of the formats.
+  #       e.g., "rmarkdown" is needed for "docx".
+  #
   # The list of available formats that gt can handle can be seen here:
   # ?gt::gtsave
   # Look in the "Description" and also in the param "filename".
