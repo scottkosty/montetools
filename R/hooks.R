@@ -223,22 +223,31 @@ hook_print_partial <- function(mc_part_done, mc_args_next, user_args, pn_pair_ne
       return(NULL)
     }
 
+    # todo: would be nice to "highlight" (diff color?) the
+    #       cells from the most recently completed pn-chunk.
+    print(mc_part_done)
+    matrix_for_width <- mc_table(mc_part_done)
+
     # Used to do:
     # statnames <- get_statnames(mc_part_done)
     # but that doesn't work well if first pn-chunk all had errors (so all NA elements and we never
     # learn the stat names).
-    mc_only_most_recent <- mc_pnpairs_subset(mc_part_done, pn_pairs = list(pn_pair_most_recent))
-    # Used to use a lower-level function, diags_aggregator(), but better to use
-    # mc_diags() since higher-level.
-    mc_diags_ <- mc_diags(mc_only_most_recent)
-    print(mc_diags_)
 
-
+    # If user wants to print only the most recent results (this used to be the default
+    # behavior of montetools).
+    #
+    #mc_only_most_recent <- mc_pnpairs_subset(mc_part_done, pn_pairs = list(pn_pair_most_recent))
+    ## Used to use a lower-level function, diags_aggregator(), but better to use
+    ## mc_diags() since higher-level.
+    #mc_diags_ <- mc_diags(mc_only_most_recent)
+    #print(mc_diags_)
+    #
     # TODO: get rid of this divider thing?
-    for_indiv_print <- get_pn_diags_result(mc_diags_, pn_pair_most_recent)
-    # this is the matrix we will base the width calculation on
-    # (currently the most recently printed)
-    matrix_for_width <- for_indiv_print[[length(for_indiv_print)]]
+    #for_indiv_print <- get_pn_diags_result(mc_diags_, pn_pair_most_recent)
+    ## this is the matrix we will base the width calculation on
+    ## (currently the most recently printed)
+    #matrix_for_width <- for_indiv_print[[length(for_indiv_print)]]
+
     width_ <- width_of_printed_obj(matrix_for_width)
     # alternative: just take up whole width
     # width_ <- getOption("width")
