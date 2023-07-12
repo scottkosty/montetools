@@ -1214,7 +1214,9 @@ do_mc_pair <- function(n, one_nsims, diagnostics, dgp, stat_knowledge, statistic
 #' @export
 print.montecarlo <- function(x, ...) {
   if (!is.null(attr(x, "diagnostics"))) {
-    print(mc_table(x), row.names = FALSE)
+    # TODO: ideally, the object would already be marked as "mcdiags".
+    # That is, it would have class "mcdiags" "montecarlo".
+    print_mcdiags_table(x)
   } else {
     # TODO: maybe try to guess a diagnostic? The following is pretty useless
     #       if there is a non-trivial amount of sims.

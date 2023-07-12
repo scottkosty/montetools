@@ -777,15 +777,20 @@ print.mcdiags <- function(x, format = "plain", ...) {
   # the call to apply_diag_labels_to_colnames() just below
   # validate_mcdiags(x)
 
-  x <- apply_diag_labels_to_colnames(x, format = format)
+  print_mcdiags_table(x)
 
-  for (pn in get_pn_pairs(x)) {
-    cat(pn_to_label_str(mcx = x, pn_pair = pn), "\n")
-    pn_res <- get_pn_diags_result(x, pn)
-    attr(pn_res, "nsims") <- NULL
-    print(pn_res)
-    cat("\n")
-  }
+  # EXPIRE: the below was before we implemented printing of
+  #         plain text tables.
+  #
+  #x <- apply_diag_labels_to_colnames(x, format = format)
+  #
+  #for (pn in get_pn_pairs(x)) {
+  #  cat(pn_to_label_str(mcx = x, pn_pair = pn), "\n")
+  #  pn_res <- get_pn_diags_result(x, pn)
+  #  attr(pn_res, "nsims") <- NULL
+  #  print(pn_res)
+  #  cat("\n")
+  #}
 }
 
 
@@ -878,4 +883,11 @@ apply_diag_labels_to_colnames <- function(mcdiags, format) {
     mcdiags[[p_]][[n_]] <- f(mcdiags[[p_]][[n_]])
   }
   return(mcdiags)
+}
+
+
+# this is just to centralize a function used in print.montecarlo()
+# and in print.mcdiags()
+print_mcdiags_table <- function(x) {
+  print(mc_table(x), row.names = FALSE)
 }
