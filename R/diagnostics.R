@@ -782,6 +782,8 @@ print.mcdiags <- function(x, format = "plain", ...) {
   # EXPIRE: the below was before we implemented printing of
   #         plain text tables.
   #
+  # TODO: is this still relevant? If so, document an example
+  #       where it makes a difference.
   #x <- apply_diag_labels_to_colnames(x, format = format)
   #
   #for (pn in get_pn_pairs(x)) {
