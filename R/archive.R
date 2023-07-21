@@ -51,6 +51,9 @@ mc_archive_ls <- function(archive_dir = getOption("montetools_archive_dir"), ver
   # todo: file.info() has a lot of helpful info. Allow different sorting criteria?
 
   dirs_and_times <- sapply(list.files(archive_dir, full.names = TRUE), FUN = file.mtime)
+  if (length(dirs_and_times) == 0) {
+    return(NA)
+  }
   sorted_ <- sort(dirs_and_times, decreasing = TRUE)
   sorted_paths <- names(sorted_)
   return(sorted_paths)
