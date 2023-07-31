@@ -19,7 +19,8 @@ Please make feature requests! Here is a list of current features:
     * Thanks to standing on the shoulders of the [futureverse](https://www.futureverse.org/), your code will run on Windows, macOS, and Linux; on your computer or in the cloud; on a laptop or on a high-performance compute cluster.
 1. Show partial results in-progress, and progress bar.
     * There is no need to wait for the simulations to end to check the current results.
-    * A progress bar is shown (for both parallel and sequential simulations), thanks to [progressr](https://progressr.futureverse.org/). <!-- (TODO: I think I need to add this feature?) you can customize the appearance of the progress bar. -->
+    * A progress bar is shown (for both parallel and sequential simulations) and can be customized, thanks to [progressr](https://progressr.futureverse.org/). <!-- (TODO: I think I need to add this feature?) you can customize the appearance of the progress bar. -->
+    * An estimate of how much time is remaining can be shown. <!-- (TODO: also can estimate time *across* chunks! i.e., can predict time based on nobs, etc. -->
 1. Maintain reproducibility.
     * Your results will be numerically reproducible, whether you run your code in parallel or sequentially, and whether you extend or merge results (see below).
 1. Quickly check whether results can likely be numerically reproduced.
