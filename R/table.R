@@ -652,6 +652,10 @@ try_tex_compile <- function(tex_f, pdf_file, chdir = TRUE, verbose = 1) {
     pdf_file_ <- pdf_file
   }
 
+  if (verbose >= 2) {
+    print(tinytex:::tlmgr_version())
+  }
+
   silent_ <- (verbose <= 1)
   try_ <- try(
               tinytex::latexmk(file = file_, pdf_file = pdf_file_, install_packages = FALSE),
