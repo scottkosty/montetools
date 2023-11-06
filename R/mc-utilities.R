@@ -207,6 +207,48 @@ get_all_mc_stats_m <- function(mc) {
 }
 
 
+get_stacked_stats_m <- function(mc) {
+  pnpairs <- get_pn_pairs(mc)
+  ptups <- get_param_tuples(mc)
+
+  # We now loop through and make (1) a col with "n", (2) a col with "dgpp",
+  # and (3) a col with "poi".
+  # todo: this code could be made more elegant
+  first <- TRUE
+  for (pn in pnpairs) {
+    stats_m_one <- mc_stats_m(mc, pn_pair = pn)
+    # will reassign these row names as a *column* in the data.frame. Can't have dup row names.
+    rownames_vec <- rownames(stats_m_one)
+    rownames(stats_m_one) <- NULL
+    stats_m_one_df <- as.data.frame(stats_m_one)
+    if (is.null(colnames(stats_m_one))) {
+      if (ncol(stats_m_one_df) > 1) {
+        stop("need to fix this for higher-dimensional stats")
+      } else {
+        # TODO: this string "value" is relied on in mc_plot_density().
+        #       Make more robust, e.g., store "value" in a global var?
+        #       Similar for "dgpp_label" and "poi" creation below.
+        names(stats_m_one_df) <- "value"
+      }
+    }
+    stats_m_one_df$statname <- rownames_vec
+    stats_m_one_df$n <- pn[["n"]]
+
+    ptup <- ptups[[pn[["p"]]]]
+    stats_m_one_df$dgpp_label <- ptup$label
+    stats_m_one_df$poi <- ptup$true_poi
+
+    if (first) {
+      first <- FALSE
+      ret <- stats_m_one_df
+    } else {
+      ret <- rbind(ret, stats_m_one_df)
+    }
+  }
+  return(ret)
+}
+
+
 mc_mc_apply_to_all_stats_m <- function(mc, FUN) {
   pnpairs <- get_pn_pairs(mc)
   for (pn in pnpairs) {
@@ -457,6 +499,14 @@ get_statnames_from_stat <- function(one_stat_ret) {
 
 get_param_tuple <- function(mcp) {
   get_attr(mcp, "param_tuple")
+}
+
+
+get_param_tuple <- function(mc, phash) {
+  # todo: probably there is something more efficient than going through get_param_tuples().
+  ptups <- get_param_tuples(mc)
+  ptup <- ptups[[phash]]
+  return(ptup)
 }
 
 

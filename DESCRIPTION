@@ -35,7 +35,8 @@ Imports:
     git2r,
     tinytex,
     tools,
-    glue
+    glue,
+    ggplot2
 Suggests: 
     testthat (>= 3.0.0),
     gt
