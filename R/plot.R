@@ -60,16 +60,28 @@ mc_plot_density <- function(mc, n_on_columns = TRUE) {
   # or other answer:
   # https://stackoverflow.com/questions/66893182/ggplot2-density-with-multiple-groups-and-trim-true-density-does-not-go-to-0?noredirect=1#comment136441499_66893182
 
-  if (n_on_columns) {
-    col_facet <- "n"
-    row_facet <- "dgpp_label"
-  } else {
-    col_facet <- "dgpp_label"
-    row_facet <- "n"
+  n_params <- length(unique(stats_m_stacked[, "dgpp_label"]))
+  n_nvec <- length(unique(stats_m_stacked[, "n"]))
+  # extra check:
+  n_params2 <- length(get_dgp_params(mc))
+  n_nvec2 <- length(get_nvec(mc))
+  stopifnot(identical(n_params, n_params2))
+  stopifnot(identical(n_nvec, n_nvec2))
+
+  if (n_params > 1 || n_nvec > 1) {
+
+    if (n_on_columns) {
+      col_facet <- "n"
+      row_facet <- "dgpp_label"
+    } else {
+      col_facet <- "dgpp_label"
+      row_facet <- "n"
+    }
+
+    # https://stackoverflow.com/questions/21588096/pass-string-to-facet-grid-ggplot2
+    # the order must be reversed (wrt facet_grid()) for some reason.
+    plot_ <- plot_ + facet_grid(reformulate(col_facet, row_facet))
   }
 
-  # https://stackoverflow.com/questions/21588096/pass-string-to-facet-grid-ggplot2
-  # the order must be reversed (wrt facet_grid()) for some reason.
-  plot_facetted <- plot_ + facet_grid(reformulate(col_facet, row_facet))
-  return(plot_facetted)
+  return(plot_)
 }
