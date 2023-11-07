@@ -497,6 +497,15 @@ get_statnames_from_stat <- function(one_stat_ret) {
 }
 
 
+get_stat_colnames <- function(mc) {
+  # assume that all pn pairs have same stat col names, so just
+  # pull from the first.
+  pn_pair_first <- get_pn_pairs(mc)[[1]]
+  stats_m <- mc_stats_m(mc, pn_pair = pn_pair_first)
+  return(colnames(stats_m))
+}
+
+
 get_param_tuple <- function(mcp) {
   get_attr(mcp, "param_tuple")
 }

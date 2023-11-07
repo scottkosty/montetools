@@ -1,3 +1,12 @@
+# todo: It could make sense to have mc_stats_subset() different from mc_stat_colnames_subset(), just
+# to keep the interfaces more minimal for the users.
+#
+# In that case, keep this core function the same so both functions can use the same underlying code.
+# It is just that mc_stats_subset() would only have user args remove_these and keep these; and
+# mc_stats_colnames_subset() would only have args remove_these_cols, and keep_these_cols.
+#
+# Note that the args remove_these_cols, keep_these_cols, are useful before calling mc_plot_density.
+
 # TODO: overload subset()? i.e., create a method for subset.montecarlo ?
 #' Subset on stats
 #'
@@ -8,9 +17,14 @@
 #' @eval param_mc()
 #' @param remove_these The names of the statistics to remove. Cannot be combined with 'keep_these'.
 #' @param keep_these The names of the statistics to keep. Cannot be combined with 'remove_these'.
-mc_stats_subset <- function(mc, remove_these, keep_these) {
-  if (missing(remove_these) + missing(keep_these) != 1) {
-    stop("Exactly one of 'remove_these' and 'keep_these' must be specified.")
+#' @param remove_these_cols The names of the statistic *columns* to remove. Cannot be combined with 'keep_these_cols'.
+#' @param keep_these_cols The names of the statistic *columns* to keep. Cannot be combined with 'remove_these_cols'.
+mc_stats_subset <- function(mc, remove_these, keep_these, remove_these_cols, keep_these_cols) {
+  if (!missing(remove_these) && !missing(keep_these)) {
+    stop("Exactly one of 'remove_these' and 'keep_these' can be specified.")
+  }
+  if (!missing(remove_these_cols) && !missing(keep_these_cols)) {
+    stop("Exactly one of 'remove_these' and 'keep_these' can be specified.")
   }
 
   validate_montecarlo(mc)
@@ -42,12 +56,21 @@ mc_stats_subset <- function(mc, remove_these, keep_these) {
           stop("All statistics were removed. Other methods will not work.")
         }
       } else {
-        # This should be caught in the preamble sanity checks, but we include
-        # an extra check here.
-        stop("We currently do not support both 'keep_these' and 'remove_these'.")
+        # must be that keep_these_cols or remove_these_cols was specified. todo: Assert on this.
+        keep_these <- stat_names
       }
 
-      chunk_replacement <- chunk_m[stat_names %in% keep_these, , drop = FALSE]
+      stat_colnames <- colnames(chunk_m)
+      if (!missing(keep_these_cols)) {
+        keep_these_cols_internal <- keep_these_cols
+      } else if (!missing(remove_these_cols)) {
+        keep_these_cols_internal <- stat_colnames[!remove_these_cols]
+      } else {
+        # user must be just removing stat names, not stat cols. todo: Assert on this.
+        keep_these_cols_internal <- stat_colnames
+      }
+
+      chunk_replacement <- chunk_m[stat_names %in% keep_these, stat_colnames %in% keep_these_cols_internal, drop = FALSE]
       mc_stats_m(mc, c(p = p_, n = n_)) <- chunk_replacement
     }
   }

@@ -4,7 +4,13 @@
 \alias{mc_stats_subset}
 \title{Subset on stats}
 \usage{
-mc_stats_subset(mc, remove_these, keep_these)
+mc_stats_subset(
+  mc,
+  remove_these,
+  keep_these,
+  remove_these_cols,
+  keep_these_cols
+)
 }
 \arguments{
 \item{mc}{An MC object (e.g., created from mc_run).}
@@ -12,6 +18,10 @@ mc_stats_subset(mc, remove_these, keep_these)
 \item{remove_these}{The names of the statistics to remove. Cannot be combined with 'keep_these'.}
 
 \item{keep_these}{The names of the statistics to keep. Cannot be combined with 'remove_these'.}
+
+\item{remove_these_cols}{The names of the statistic *columns* to remove. Cannot be combined with 'keep_these_cols'.}
+
+\item{keep_these_cols}{The names of the statistic *columns* to keep. Cannot be combined with 'remove_these_cols'.}
 }
 \description{
 Note that the "sys_stats" simulation time is no longer valid after using
