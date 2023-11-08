@@ -585,7 +585,7 @@ check_diag_ret <- function(stats_m, diag_ret) {
   }
 
   if (!identical(nrow(diag_ret), nrow(stats_m))) {
-    stop("It is expected that each diagnostic returns a data.frame or matrix with the same number of rows as the stats matrix (the input to diagnostics) See the argument 'aggregators' (default of mean) for how the individual diagnostic rows are aggregated into summaries.")
+    stop("It is expected that each diagnostic returns a data.frame or matrix with the same number of rows as the stats matrix (the input to diagnostics). See the argument 'aggregators' (default of mean) for how the individual diagnostic rows are aggregated into summaries.")
   }
 }
 
