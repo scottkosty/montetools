@@ -535,7 +535,6 @@ get_phashes <- function(mc, sortby) {
 
 
 get_param_tuples <- function(mc, sortby = "none") {
-
   ptups <- lapply(mc, FUN = get_attr, "param_tuple")
   phashes_sorted <- get_phashes(mc, sortby = sortby)
   stopifnot(identical(length(phashes_sorted), length(ptups)))
