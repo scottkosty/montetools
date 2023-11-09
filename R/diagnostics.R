@@ -410,7 +410,7 @@ diag_ht_pval2rr_gen <- function(p) {
 # ... are passed to FUN.
 #' @importFrom parallel mclapply
 param_nobs_apply <- function(X, FUN, parallel = FALSE, ...) {
-  # We copy X to X_outer because will have inner lapply's (which have X as arg). It's
+  # We copy X to X_outer because we will have inner lapplys (which have X as arg). It's
   # not necessary but makes it a bit more readable.
   X_outer <- X
   rm(X)
@@ -607,6 +607,7 @@ check_diags_df <- function(diags_df) {
 
 
 # TODO: rename. "mc" should be "pnch" for "pn-chunk".
+# TODO: also, this function should have "diags" in the name, right?
 process_one_mc <- function(sims_one_mc_l, n, ptup, diagnostics, aggregators) {
   #    the_stats_l <- lapply(sims_one_mc_l[["mc"]], `[[`, "stat")
   # TODO: we're currently ignoring sims_one_mc_l$sims_l$aux
