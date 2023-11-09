@@ -68,6 +68,9 @@ mc_plot_density <- function(mc, n_on_columns = TRUE) {
   stopifnot(identical(n_params, n_params2))
   stopifnot(identical(n_nvec, n_nvec2))
 
+  # TODO: use facet_wrap() if only one of 'n' or 'dgpp_label' has variance?
+
+
   if (n_params > 1 || n_nvec > 1) {
 
     if (n_on_columns) {
