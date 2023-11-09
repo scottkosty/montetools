@@ -232,7 +232,7 @@ get_stacked_stats_m <- function(mc) {
       }
     }
     stats_m_one_df$statname <- rownames_vec
-    stats_m_one_df$n <- pn[["n"]]
+    stats_m_one_df$n <- get_n_as_int(pn)
 
     ptup <- ptups[[pn[["p"]]]]
     stats_m_one_df$dgpp_label <- ptup$label
