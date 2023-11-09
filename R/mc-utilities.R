@@ -899,6 +899,24 @@ dgp_params_to_list <- function(obj) {
   # get the labels from the names before overriding.
   dgpp_labels <- get_dgpp_labels(obj)
   dgpp_hashes <- sapply(X = ret, FUN = calc_hash)
+
+  # TODO: it's possible they're not duplicates, but that there's a hash conflict.
+  # Check that the elements *themselves* are duplicates.
+  # TODO: it would be more user-friendly to report which is a duplicate *of which*.
+  #       create a separate function that does this and ask on SO if any efficient way.
+  #
+  # Note that we check for duplicate *labels* in a different place. It's possible to have duplicate
+  # labels with non-duplicate elements, and duplicate elements with non-duplicate labels, so both
+  # of these checks are good and suggest user error.
+  duplicates_ <- duplicated(dgpp_hashes)
+  if (any(duplicates_)) {
+    stop("DGPP parameters must be unique. The following DGPP indexes are duplicates of a previous one: ",
+         paste(which(duplicates_), collapse = ", "),
+         "."
+    )
+  }
+
+
   names(ret) <- dgpp_hashes
   if (!is.null(dgpp_labels)) {
     if (!all(dgpp_labels == dgpp_hashes)) {

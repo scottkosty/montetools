@@ -283,6 +283,7 @@ gen_param_tuples <- function(dgpp_to_poi, dgp_params, nvec, hooks_ba_dgpp_to_poi
   labels <- sapply(param_tuples, `[[`, "label")
 
   # labels should be unique.
+  # We check for duplicate *elements* in dgp_params_to_list().
   if (anyDuplicated(labels) != 0) {
     stop("parameter labels should be unique. There is a duplicate parameter in at least one of the following:", "\n", paste0(labels, collapse = ", "), "\n", "You can set the parameter labels by having your dgpp_to_poi() return a list of length 2, where the first element is the numeric POI and the second element is the label, which can be a string. For more info, see ?mc_run.")
   }
