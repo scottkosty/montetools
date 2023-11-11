@@ -125,7 +125,7 @@ param_engine <- function() {
 #' @export
 #' @details Return of "tex" format is a character vector. If you want to output directly to LaTeX, e.g., if calling mc_table() in knitr, wrap mc_table() in cat() and in the knitr chunk options specify "results = 'asis'". The point of returning a character vector is that you may choose to insert elements (which will be LaTeX lines after cat()) into the vector, such as "\\hline" to categorize certain rows.
 #' mc_table supports output partial tables (e.g., if not all of the pn-chunks are available).
-mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, aggregators, colname_poi = "parameter", colname_stat, colname_diag,
+mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, aggregators, colname_poi, colname_stat, colname_diag,
                      # Default to FALSE for now, since allows LaTeX in column names.
                      #
                      # A default to TRUE might be more user-friendly.
@@ -359,6 +359,11 @@ mc_table <- function(diags_or_mc, output_file = NA, format = NA, engine = NA, ag
   stopifnot(length(param_labels) == nparams)
   #
   if (missing(colname_poi)) {
+    # It might seem like we always want colname_poi <- NA if nparams is 1,
+    # but when we're printing the partial results, for the first param
+    # we still want to print the parameter (even though at this point there
+    # are only results from one parameter). Otherwise, it looks strange when
+    # the parameters are printed on the next partial results print.
     if (nparams == 1) {
       colname_poi <- NA
     } else {

@@ -225,7 +225,19 @@ hook_print_partial <- function(mc_part_done, mc_args_next, user_args, pn_pair_ne
 
     # todo: would be nice to "highlight" (diff color?) the
     #       cells from the most recently completed pn-chunk.
-    print(mc_part_done)
+
+    if (length(user_args$dgp_params) > 1) {
+      print_param_col_ <- "always"
+    } else {
+      print_param_col_ <- NA
+    }
+
+    print(mc_part_done,
+          # otherwise it looks strange that the param col is not printed for
+          # the first (few) chunks, and then it is printed.
+          # Not a big issue, but looks better this way.
+          print_param_col = print_param_col_
+    )
     matrix_for_width <- mc_table(mc_part_done)
 
     # Used to do:

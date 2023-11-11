@@ -517,6 +517,10 @@ do_mc_run <- function(dgp_params = NULL, nvec, dgp, dgpp_to_poi = NULL, statisti
     class(results) <- "montecarlo"
   }
 
+  # todo: not elegant naming, since it's not clear that "dgp_params" is different
+  # from the user argument. Ideally, we should use "dpg_params_internal" and leave
+  # dgp_params untouched.
+  dgp_params_user_arg <- dgp_params
   dgp_params <- dgp_params_to_list(dgp_params)
 
   # todo: what if nvec is already named?
@@ -602,12 +606,19 @@ do_mc_run <- function(dgp_params = NULL, nvec, dgp, dgpp_to_poi = NULL, statisti
   }
 
 
+  # We expose the user arguments for which there's a use case in a hook.
   user_args <- list(
     diagnostics = diagnostics,
     dgp = dgp,
     statistic = statistic,
     stat_knowledge = stat_knowledge,
     verbose = verbose
+  )
+  # We pass these to the hooks, but we will no pass to do_mc_pair().
+  user_args_for_only_hooks <- list(
+    # dgp_params is useful for knowing whether to print the parameter column
+    # in the partial results. Search for "print_param_col" in hooks.R.
+    dgp_params = dgp_params_user_arg
   )
 
   attrs_l <- list(
@@ -724,7 +735,7 @@ do_mc_run <- function(dgp_params = NULL, nvec, dgp, dgpp_to_poi = NULL, statisti
       args_to_beforehooks_l <- list(
                                     mc_part_done = results_partial,
                                     mc_args_next = mc_next,
-                                    user_args = user_args,
+                                    user_args = c(user_args, user_args_for_only_hooks),
                                     pn_pair_next = pn_pair_next
                                )
       if (verbose >= 2) message("Applying hooks before pnchunk...")
@@ -792,7 +803,7 @@ do_mc_run <- function(dgp_params = NULL, nvec, dgp, dgpp_to_poi = NULL, statisti
   if (verbose >= 2) message("Applying hooks after all sims are done...")
   args_to_beforehooks_l <- list(mc_part_done = results,
                                 mc_args_next = NULL,
-                                user_args = user_args,
+                                user_args = c(user_args, user_args_for_only_hooks),
                                 pn_pair_next = NULL)
   hook_rets_l <- run_pnchunk_hooks(hooks = hooks_pnchunk, hook_args = args_to_beforehooks_l)
   if (verbose >= 2) message("Applying hooks after all sims are done... done.")
@@ -1217,7 +1228,7 @@ print.montecarlo <- function(x, ...) {
   if (!is.null(attr(x, "diagnostics"))) {
     # TODO: ideally, the object would already be marked as "mcdiags".
     # That is, it would have class "mcdiags" "montecarlo".
-    print_mcdiags_table(x)
+    print_mcdiags_table(x, ...)
   } else {
     # TODO: maybe try to guess a diagnostic? The following is pretty useless
     #       if there is a non-trivial amount of sims.

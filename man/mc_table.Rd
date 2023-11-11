@@ -10,7 +10,7 @@ mc_table(
   format = NA,
   engine = NA,
   aggregators,
-  colname_poi = "parameter",
+  colname_poi,
   colname_stat,
   colname_diag,
   escape = FALSE,

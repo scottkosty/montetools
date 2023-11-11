@@ -891,6 +891,12 @@ apply_diag_labels_to_colnames <- function(mcdiags, format) {
 
 # this is just to centralize a function used in print.montecarlo()
 # and in print.mcdiags()
-print_mcdiags_table <- function(x) {
-  print(mc_table(x), row.names = FALSE)
+print_mcdiags_table <- function(x, print_param_col = NA) {
+  # instead of having print_param_col arg here, we could put it in
+  # mc_table(), but mc_table() already has a lot of arguments.
+  if (!is.na(print_param_col) && print_param_col == "always") {
+    print(mc_table(x, colname_poi = "param."), row.names = FALSE)
+  } else {
+    print(mc_table(x), row.names = FALSE)
+  }
 }
