@@ -634,6 +634,7 @@ make_table_standalone <- function(tex_lines) {
 # Not exporting because user should always use mc_table() (?).
 #
 #' @importFrom tools file_ext
+#' @importFrom tinytex tlmgr_version latexmk
 #' @title MC table compilation
 #' @param tex_f The path (with .tex extension) to the input file.
 #' @param pdf_file The path (with .pdf extension) to the output file.
@@ -658,12 +659,12 @@ try_tex_compile <- function(tex_f, pdf_file, chdir = TRUE, verbose = 1) {
   }
 
   if (verbose >= 2) {
-    print(tinytex::tlmgr_version())
+    print(tlmgr_version())
   }
 
   silent_ <- (verbose <= 1)
   try_ <- try(
-              tinytex::latexmk(file = file_, pdf_file = pdf_file_, install_packages = FALSE),
+              latexmk(file = file_, pdf_file = pdf_file_, install_packages = FALSE),
               silent = silent_
   )
   if (inherits(try_, "try-error") && verbose >= 1) {
