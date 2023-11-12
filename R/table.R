@@ -658,7 +658,7 @@ try_tex_compile <- function(tex_f, pdf_file, chdir = TRUE, verbose = 1) {
   }
 
   if (verbose >= 2) {
-    print(tinytex:::tlmgr_version())
+    print(tinytex::tlmgr_version())
   }
 
   silent_ <- (verbose <= 1)
