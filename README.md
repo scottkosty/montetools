@@ -245,6 +245,16 @@ Alternatively, we can output to other formats, such as .docx, thanks to [gt](htt
     # which can be done as follows:   install.packages(c("gt", "rmarkdown"))
     mc_table(mc, output_file = "table1.docx")
 
+## Plotting the results
+
+Some MC results are best interpreted graphically. For example, we can plot the simulated densities of the estimators as follows:
+
+    mc_plot_density(mc)
+
+<img src="man/figures/README-densities.svg" width="630"/>
+
+The vertical line shows the true parameter value.
+
 
 ## Adding diagnostic without rerunning
 
