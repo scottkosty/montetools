@@ -8,9 +8,6 @@ R package to run Monte Carlo (MC) simulations, display results, reproduce them, 
 
 This package is especially beneficial for MCs that take considerable amounts of time (e.g., hours, days).
 
-Current state of development: alpha.
-- montetools is currently in alpha because (1) the interface should not be considered stable (e.g., the argument names could change) and (2) there are bugs lurking and I need testing from workflows other than my own to lure them out so I can fix them. After feedback and testing from others, montetools will move towards a more stable state.
-
 # Features
 
 Please make feature requests! Here is a list of current features:
