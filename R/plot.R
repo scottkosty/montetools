@@ -6,7 +6,7 @@
 
 #' Plot simulated densities of MC statistics
 #'
-#' Plot the simulated densities of MC statistics. Currently, only one statistic column at a time may be plotted. e.g., if you have a statistics which returns estimates for both the mean and variance of a population, you must use mc_stats_subset() to keep just one of those. A ggplot object is returned.
+#' Plot the simulated densities of MC statistics. Currently, only one statistic column at a time may be plotted. e.g., if you have a statistics which returns estimates for both the mean and variance of a population, you must use mc_stats_subset() to keep just one of those. A ggplot object is returned. You can save this plot, for example, by running "library('ggplot2')" and then calling "ggsave".
 #'
 #' @eval param_mc()
 #' @param n_on_columns If TRUE (default), n is on the columns if length of nvec of MC is greater than 1. If FALSE, n will be on the rows. If length of dgp_params of MC is greater than 1, it will be on the other dimension.
