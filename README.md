@@ -55,7 +55,7 @@ A general feature of montetools is preserving reproducibility. You can enhance a
 
 # Installation
 
-montetools will eventually be on CRAN after some testing and fixes, but until then you can install the package from this GitHub repository. First, make sure you have the "remotes" package installed and then run the following:
+montetools will be on CRAN soon. You may also choose to install the package from this GitHub repository. First, make sure you have the "remotes" package installed and then run the following:
 
     remotes::install_github("scottkosty/montetools", upgrade = FALSE)
 
