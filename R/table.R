@@ -675,7 +675,7 @@ try_tex_compile <- function(tex_f, pdf_file, chdir = TRUE, verbose = 1) {
     setwd(wd_orig)
     from_ <- file.path(dir_for_tex_comp, pdf_file_)
     if (file.exists(from_)) {
-      file.rename(from = from_, to = pdf_file)
+      file_mv(from = from_, to = pdf_file)
     } else {
       # to trigger this branch:
       # mc_table(mc, output_file = "table.pdf", colname_poi = "\\parameter")

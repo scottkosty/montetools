@@ -168,8 +168,8 @@ hook_save_partial <- function(mc_part_done, mc_args_next, user_args, pn_pair_nex
     # protect against (unlikely) crashes during the save operation so at least the
     # previous partial MC file is preserved.
     saveRDS(mc_part_done, file = bufile2)
-    file.rename(from = bufile, to = bufile_old)
-    file.rename(from = bufile2, to = bufile)
+    file_mv(from = bufile, to = bufile_old)
+    file_mv(from = bufile2, to = bufile)
     file.remove(bufile_old)
   } else {
     saveRDS(mc_part_done, file = bufile)

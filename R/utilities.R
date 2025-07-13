@@ -828,3 +828,14 @@ do_interleave <- function(mat1, mat2) {
 
   return(combined_mat_alt)
 }
+
+
+# file.rename() fails in the case of renaming across file systems.
+# So instead, we copy and then remove.
+# Similar issue to the ones reported here:
+#   https://github.com/Bioconductor/BiocFileCache/issues/9
+#   https://github.com/wch/vtest/issues/14
+file_mv <- function(from, to) {
+  file.copy(from = from, to = to)
+  file.remove(from)
+}
