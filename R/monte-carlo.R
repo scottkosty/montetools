@@ -94,7 +94,8 @@ format_sims_list <- function(list_of_sims) {
   # In case I decide on something different (not to always convert):
   # - at the very least, do this if only one column.
   # - might as well do for case where all columns have same type?
-  # TODO: give informative error if data.frame has a factor or character in it? tell them to use aux? document this.
+  # TODO: give informative error if data.frame has a factor or character in it? tell them to use aux?
+  # todo: ^^^ document this.
   if (is.data.frame(stats_stacked)) {
     stats_stacked <- as.matrix(stats_stacked)
     first_stat_ret <- as.matrix(stats_l[[first_non_NA_idx]])
@@ -117,9 +118,9 @@ format_sims_list <- function(list_of_sims) {
     }
   }
 
-  # Placement: this correction must be before correct_rownames_of_NAs() because
-  # that function relies on nrows(stats_stacked) being correct, which is what
-  # expand_NA_returns() does.
+  # Placement: this correction must be before the call to
+  # correct_rownames_of_NAs() because that function relies on
+  # nrows(stats_stacked) being correct, which is what expand_NA_returns() does.
   stats_stacked <- expand_NA_returns(stats_stacked, stats_l)
 
   # If the stat_condition_handler turns errors/warnings into NA, it does not know
@@ -128,7 +129,7 @@ format_sims_list <- function(list_of_sims) {
   # NA element based on the other stat names.
   rownames(stats_stacked) <- correct_rownames_of_NAs(stacked_rownames = rownames(stats_stacked), nsims = one_nsims)
 
-  # these can be anything so we cannot use a more optimized format.
+  # these can be any type of object so we cannot use a more optimized format.
   auxs <- lapply(sims_l, `[[`, "aux")
   # todo: this overwrite is not intuitive. Just use a different name.
   sims_l <- list(stats_m = stats_stacked, aux_l = auxs)
